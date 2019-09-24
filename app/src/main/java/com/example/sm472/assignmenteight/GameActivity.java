@@ -17,7 +17,7 @@ public class GameActivity extends  AppCompatActivity {
         actionBar.hide();
 
         //set fullscreen sticky immersive
-        int uioptions = View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+        int uioptions = View.SYSTEM_UI_FLAG_FULLSCREEN
                         | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
                         | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION;
         getWindow().getDecorView().setSystemUiVisibility(uioptions);
