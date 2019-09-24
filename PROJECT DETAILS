@@ -1,0 +1,24 @@
+PROJECT BACKLOG (Release 1)
+
+1) Home screen (FULLSCREEN)
+   a) Title
+   b) Play button
+   c) High Score (not table)
+
+   TASKS
+   - XML layout
+   - Place to display high score
+   - click functionality for Play button (Switch to Game Activity)
+
+
+
+2) Game Screen (FULLSCREEN)
+   a) player
+   b) target ()
+   c) Obstacle (0..*)
+
+   TASKS
+   a) Create game Activity
+   b) Write Classes for game elements, player, target & obstacle
+   c) display game elements
+
