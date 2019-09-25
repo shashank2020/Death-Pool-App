@@ -1,20 +1,19 @@
 package com.example.sm472.assignmenteight;
 
-import android.content.Intent;
+import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.View;
-import android.widget.Toast;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 
-public class MainActivity extends AppCompatActivity {
-    Intent intent;
+public class HiscoreActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-//
-//        //Hide actionbar
+        setContentView(R.layout.activity_hiscore);
+
+        //Hide actionbar
         ActionBar actionBar = (ActionBar) getSupportActionBar();
         actionBar.hide();
 
@@ -24,22 +23,11 @@ public class MainActivity extends AppCompatActivity {
                 | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION;
         getWindow().getDecorView().setSystemUiVisibility(uioptions);
 
-
+        String[] array = getResources().getStringArray(R.array.listArray);
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, array);
+        ListView listView = (ListView) findViewById(R.id.hiscore_list);
+        listView.setAdapter(arrayAdapter);
 
     }
 
-
-    public void OnClickplay(View v) {
-
-        Toast.makeText(this,"CLICKED",Toast.LENGTH_SHORT).show();
-        intent = new Intent(this,GameActivity.class);
-        startActivity(intent);
-    }
-
-
-    public void onClickHiscore(View view) {
-        Toast.makeText(this,"HISCORE_CLICKED",Toast.LENGTH_SHORT).show();
-        intent = new Intent(this,HiscoreActivity.class);
-        startActivity(intent);
-    }
 }
