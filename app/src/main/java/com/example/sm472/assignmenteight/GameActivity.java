@@ -14,7 +14,8 @@ public class GameActivity extends AppCompatActivity{
 
     //PLAYER OBJECT
     Player player ;
-
+    //TARGET OBJECT
+    Target target;
 
     //variables
     float StartX, StartY;
@@ -42,9 +43,17 @@ public class GameActivity extends AppCompatActivity{
 
                 player = new Player(StartX,StartY,50,getColor(R.color.colorPrimary));
             }
+            //if target is null create new reason: SAME AS ABOVE
+            if(target==null)
+            {
+                StartY = ((canvas.getHeight()/6));
+                target = new Target(StartX,StartY,65,getColor(R.color.colorAccent));
+            }
 
             //DRAW PLAYER
             player.Draw(canvas);
+            //DRAW TARGET
+            target.Draw(canvas);
 
         }
     }
