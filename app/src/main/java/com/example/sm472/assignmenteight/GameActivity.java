@@ -2,6 +2,8 @@ package com.example.sm472.assignmenteight;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.ActionBar;
@@ -34,25 +36,30 @@ public class GameActivity extends AppCompatActivity{
         @Override
         protected void onDraw(Canvas canvas) {
             super.onDraw(canvas);
+            Bitmap bp = BitmapFactory.decodeResource(getResources(),R.drawable.player);
+            Bitmap bt = BitmapFactory.decodeResource(getResources(),R.drawable.target);
 
             //if player is null create with start position  .... DOING THIS CAUSE CANT SET POSITION OUTSIDE onDraw() CAUSE CAN'T ACCESS CANVAS IN ON CREATE
             if(player==null)
             {
-                StartX = canvas.getWidth()/2;
-                StartY = ((canvas.getHeight()/5)*4);
+                StartX = canvas.getWidth()/2-bp.getWidth()/2;
+                StartY = ((canvas.getHeight()/5)*4)-bp.getHeight()/2;
 
-                player = new Player(StartX,StartY,50,getColor(R.color.colorPrimary));
+                player = new Player(StartX,StartY,50,getColor(R.color.colorPrimary),bp);
             }
             //if target is null create new reason: SAME AS ABOVE
             if(target==null)
             {
-                StartY = ((canvas.getHeight()/6));
-                target = new Target(StartX,StartY,65,getColor(R.color.colorAccent));
+                StartY = ((canvas.getHeight()/6))-bt.getHeight()/2;
+                StartX = (canvas.getWidth()/2)-bt.getWidth()/2;
+                target = new Target(StartX,StartY,65,getColor(R.color.colorAccent),bt);
             }
 
             //DRAW PLAYER
             player.Draw(canvas);
             //DRAW TARGET
+
+
             target.Draw(canvas);
 
         }
