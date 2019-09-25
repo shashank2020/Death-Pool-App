@@ -12,7 +12,17 @@ import android.widget.Toast;
 
 public class GameActivity extends AppCompatActivity{
 
+    //PLAYER OBJECT
     Player player ;
+
+
+    //variables
+    float StartX, StartY;
+
+
+
+
+
     class GraphicsView extends View{
 
         public GraphicsView(Context context)
@@ -23,7 +33,19 @@ public class GameActivity extends AppCompatActivity{
         @Override
         protected void onDraw(Canvas canvas) {
             super.onDraw(canvas);
+
+            //if player is null create with start position  .... DOING THIS CAUSE CANT SET POSITION OUTSIDE onDraw() CAUSE CAN'T ACCESS CANVAS IN ON CREATE
+            if(player==null)
+            {
+                StartX = canvas.getWidth()/2;
+                StartY = ((canvas.getHeight()/5)*4);
+
+                player = new Player(StartX,StartY,50,getColor(R.color.colorPrimary));
+            }
+
+            //DRAW PLAYER
             player.Draw(canvas);
+
         }
     }
 
@@ -43,10 +65,6 @@ public class GameActivity extends AppCompatActivity{
         getWindow().getDecorView().setSystemUiVisibility(uioptions);
 
 
-
-
-
-        player = new Player(100,100,50,getColor(R.color.colorPrimary));
         GraphicsView graphicsview = new GraphicsView(this);
         ConstraintLayout c = (ConstraintLayout)findViewById(R.id.gamelayout);
         c.addView(graphicsview);
