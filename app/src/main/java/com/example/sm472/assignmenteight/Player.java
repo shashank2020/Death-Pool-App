@@ -58,11 +58,11 @@ public class Player extends GameElement {
     {
 
 
-        if(xpos+radius>=canvas.getWidth() || xpos-radius<=0)
+        if(xpos+radius+x>=canvas.getWidth() || xpos-radius+x<=0)
         {
             invertx = !invertx;
         }
-        if(ypos+radius>=canvas.getHeight() || ypos-radius<=0)
+        if(ypos+radius+y>=canvas.getHeight() || ypos-radius+y<=0)
         {
             inverty = !inverty;
         }
@@ -89,4 +89,6 @@ public class Player extends GameElement {
         invertx=false;
         inverty=false;
     }
+
+
 }

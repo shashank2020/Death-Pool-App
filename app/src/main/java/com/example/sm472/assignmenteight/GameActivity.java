@@ -71,6 +71,9 @@ public class GameActivity extends AppCompatActivity{
             if(player.collision(target))
             {
                 Log.i("TAG","BOOOOOOOOOOOOOOOOOOOOOOOOOOOM");
+                player=null;
+                Xvelocity_player=0;
+                Yvelocity_player=0;
             }
             invalidate();
 
