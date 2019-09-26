@@ -9,6 +9,8 @@ import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.GestureDetector;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Toast;
 
@@ -26,11 +28,12 @@ public class GameActivity extends AppCompatActivity{
 
 
 
-    class GraphicsView extends View{
-
+    class GraphicsView extends View implements GestureDetector.OnGestureListener{
+        private GestureDetector gestureDetector;
         public GraphicsView(Context context)
         {
             super(context);
+            gestureDetector = new GestureDetector(context, this);
         }
 
         @Override
@@ -61,6 +64,45 @@ public class GameActivity extends AppCompatActivity{
 
             target.Draw(canvas);
 
+        }
+        @Override
+        public boolean onTouchEvent (MotionEvent event) {
+            if(gestureDetector.onTouchEvent(event)) {
+                return true;
+            }
+            return super.onTouchEvent(event);
+        }
+
+        @Override
+        public boolean onDown(MotionEvent motionEvent) {
+            return true;
+        }
+
+        @Override
+        public void onShowPress(MotionEvent motionEvent) {
+
+        }
+
+        @Override
+        public boolean onSingleTapUp(MotionEvent motionEvent) {
+            return false;
+        }
+
+        @Override
+        public boolean onScroll(MotionEvent motionEvent, MotionEvent motionEvent1, float v, float v1) {
+            return false;
+        }
+
+        @Override
+        public void onLongPress(MotionEvent motionEvent) {
+
+        }
+
+        @Override
+        public boolean onFling(MotionEvent motionEvent, MotionEvent motionEvent1, float v, float v1) {
+            Toast.makeText(GameActivity.this, "flung", Toast.LENGTH_SHORT).show();
+            //player.move(v, v1)
+            return true;
         }
     }
 
