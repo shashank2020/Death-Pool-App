@@ -39,23 +39,22 @@ public class GameActivity extends AppCompatActivity{
         @Override
         protected void onDraw(Canvas canvas) {
             super.onDraw(canvas);
-            Bitmap bp = BitmapFactory.decodeResource(getResources(),R.drawable.player);
-            Bitmap bt = BitmapFactory.decodeResource(getResources(),R.drawable.target);
+
 
             //if player is null create with start position  .... DOING THIS CAUSE CANT SET POSITION OUTSIDE onDraw() CAUSE CAN'T ACCESS CANVAS IN ON CREATE
             if(player==null)
             {
-                StartX = canvas.getWidth()/2-bp.getWidth()/2;
-                StartY = ((canvas.getHeight()/5)*4)-bp.getHeight()/2;
+                StartX = canvas.getWidth()/2;
+                StartY = ((canvas.getHeight()/5)*4);
 
-                player = new Player(StartX,StartY,50,getColor(R.color.colorPrimary),bp);
+                player = new Player(StartX,StartY,50,getColor(R.color.playerColor),getColor(R.color.white));
             }
             //if target is null create new reason: SAME AS ABOVE
             if(target==null)
             {
-                StartY = ((canvas.getHeight()/6))-bt.getHeight()/2;
-                StartX = (canvas.getWidth()/2)-bt.getWidth()/2;
-                target = new Target(StartX,StartY,65,getColor(R.color.colorAccent),bt);
+                StartY = ((canvas.getHeight()/6));
+                StartX = (canvas.getWidth()/2);
+                target = new Target(StartX,StartY,65,getColor(R.color.targetColor),getColor(R.color.white));
             }
 
             //DRAW PLAYER
