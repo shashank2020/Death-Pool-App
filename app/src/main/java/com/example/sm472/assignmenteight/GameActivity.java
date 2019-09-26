@@ -66,10 +66,17 @@ public class GameActivity extends AppCompatActivity{
             target.Draw(canvas);
 
         }
+        @Override
+        public boolean onTouchEvent (MotionEvent event) {
+            if(gestureDetector.onTouchEvent(event)) {
+                return true;
+            }
+            return super.onTouchEvent(event);
+        }
 
         @Override
         public boolean onDown(MotionEvent motionEvent) {
-            return false;
+            return true;
         }
 
         @Override
@@ -94,7 +101,9 @@ public class GameActivity extends AppCompatActivity{
 
         @Override
         public boolean onFling(MotionEvent motionEvent, MotionEvent motionEvent1, float v, float v1) {
-            return false;
+            Toast.makeText(GameActivity.this, "flung", Toast.LENGTH_SHORT).show();
+            //player.move(v, v1)
+            return true;
         }
     }
 
