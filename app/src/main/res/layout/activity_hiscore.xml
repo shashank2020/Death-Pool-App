@@ -15,6 +15,7 @@
         android:padding="15sp"
         android:text="@string/top5"
         android:textSize="40sp"
+        android:fontFamily="@font/display"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toTopOf="@id/hiscore_list"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -26,6 +27,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/hiscore_list"
         tools:listitem="@layout/listview_row"
+
         app:layout_constraintTop_toBottomOf="@id/hiscore_title"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"

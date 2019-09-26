@@ -10,6 +10,7 @@
         android:layout_weight="1"
         android:padding="20sp"
         android:textSize="30sp"
+        android:fontFamily="@font/display"
         android:text="Player"
         />
     <TextView
@@ -17,6 +18,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:padding="20sp"
+        android:fontFamily="@font/display"
         android:textSize="30sp"
         android:textAlignment="textEnd"
         android:text="Score"
