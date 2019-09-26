@@ -36,6 +36,7 @@ public class Player extends GameElement {
 
     }
 
+
     protected Boolean collision(GameElement object)
     {
         float x1 = xpos;
@@ -80,5 +81,12 @@ public class Player extends GameElement {
         xpos+=x;
         ypos+=y;
 
+    }
+
+
+    protected void flickReset()
+    {
+        invertx=false;
+        inverty=false;
     }
 }

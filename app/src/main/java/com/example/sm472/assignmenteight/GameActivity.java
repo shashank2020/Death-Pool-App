@@ -120,7 +120,7 @@ public class GameActivity extends AppCompatActivity{
 
             Xvelocity_player = (v/500);
             Yvelocity_player = (v1/500);
-
+            player.flickReset();
             return true;
         }
     }
