@@ -9,6 +9,7 @@ import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
@@ -18,6 +19,8 @@ public class GameActivity extends AppCompatActivity{
 
     //PLAYER OBJECT
     Player player ;
+    float Xvelocity_player;
+    float Yvelocity_player;
     //TARGET OBJECT
     Target target;
 
@@ -57,6 +60,7 @@ public class GameActivity extends AppCompatActivity{
                 target = new Target(StartX,StartY,65,getColor(R.color.targetColor),getColor(R.color.white));
             }
 
+            player.move(Xvelocity_player,Yvelocity_player);
             //DRAW PLAYER
             player.Draw(canvas);
             //DRAW TARGET
@@ -64,7 +68,17 @@ public class GameActivity extends AppCompatActivity{
 
             target.Draw(canvas);
 
+            if(player.collision(target))
+            {
+                Log.i("TAG","BOOOOOOOOOOOOOOOOOOOOOOOOOOOM");
+            }
+            invalidate();
+
         }
+
+
+
+
         @Override
         public boolean onTouchEvent (MotionEvent event) {
             if(gestureDetector.onTouchEvent(event)) {
@@ -101,7 +115,8 @@ public class GameActivity extends AppCompatActivity{
         @Override
         public boolean onFling(MotionEvent motionEvent, MotionEvent motionEvent1, float v, float v1) {
             Toast.makeText(GameActivity.this, "flung", Toast.LENGTH_SHORT).show();
-            //player.move(v, v1)
+            Xvelocity_player = v%20;
+            Yvelocity_player = v1%20;
             return true;
         }
     }
@@ -121,6 +136,8 @@ public class GameActivity extends AppCompatActivity{
                 | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION;
         getWindow().getDecorView().setSystemUiVisibility(uioptions);
 
+        Yvelocity_player=0;
+        Xvelocity_player=0;
 
         GraphicsView graphicsview = new GraphicsView(this);
         ConstraintLayout c = (ConstraintLayout)findViewById(R.id.gamelayout);

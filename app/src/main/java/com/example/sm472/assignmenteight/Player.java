@@ -45,4 +45,10 @@ public class Player extends GameElement {
             return false;
 
     }
+
+    protected void move(float x,float y)
+    {
+        xpos+=x;
+        ypos+=y;
+    }
 }
