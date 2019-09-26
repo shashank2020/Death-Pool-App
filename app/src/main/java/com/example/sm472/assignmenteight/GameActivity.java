@@ -58,6 +58,7 @@ public class GameActivity extends AppCompatActivity{
             player.Draw(canvas);
             //DRAW TARGET
 
+
             target.Draw(canvas);
 
         }

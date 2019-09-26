@@ -29,5 +29,20 @@ public class Player extends GameElement {
 
     }
 
+    protected Boolean collision(GameElement object)
+    {
+        float x1 = xpos;
+        float y1 = ypos;
+        float x2 = object.xpos;
+        float y2 = object.ypos;
+        float rad = radius + object.radius;
+        float dis = (float) Math.sqrt(Math.pow(x2-x1,2)+Math.pow(y2-y1,2));
+        if(dis<=rad)
+        {
+            return true;
+        }
 
+            return false;
+
+    }
 }
