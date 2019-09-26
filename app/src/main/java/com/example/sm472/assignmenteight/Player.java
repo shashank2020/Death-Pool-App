@@ -11,13 +11,20 @@ public class Player extends GameElement {
 
     Paint paint ;
     Paint strokeC;
-    public Player(float x,float y,int r,int color,int stroke)
+    Canvas canvas;
+    boolean invertx;
+    boolean inverty;
+    public Player(float x,float y,int r,int color,int stroke,Canvas c)
     {
         super(x,y,r);
         paint = new Paint();
         paint.setColor(color);
         strokeC = new Paint();
         strokeC.setColor(stroke);
+        canvas =c;
+        invertx=false;
+        inverty=false;
+
     }
 
     @Override
@@ -48,7 +55,30 @@ public class Player extends GameElement {
 
     protected void move(float x,float y)
     {
+
+
+        if(xpos+radius>=canvas.getWidth() || xpos-radius<=0)
+        {
+            invertx = !invertx;
+        }
+        if(ypos+radius>=canvas.getHeight() || ypos-radius<=0)
+        {
+            inverty = !inverty;
+        }
+
+        if(inverty)
+        {
+            y*=-1;
+
+
+        }
+        if(invertx)
+        {
+            x*=-1;
+        }
+
         xpos+=x;
         ypos+=y;
+
     }
 }

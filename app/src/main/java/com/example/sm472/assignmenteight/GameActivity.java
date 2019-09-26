@@ -50,7 +50,7 @@ public class GameActivity extends AppCompatActivity{
                 StartX = canvas.getWidth()/2;
                 StartY = ((canvas.getHeight()/5)*4);
 
-                player = new Player(StartX,StartY,50,getColor(R.color.playerColor),getColor(R.color.white));
+                player = new Player(StartX,StartY,50,getColor(R.color.playerColor),getColor(R.color.white),canvas);
             }
             //if target is null create new reason: SAME AS ABOVE
             if(target==null)
@@ -114,9 +114,13 @@ public class GameActivity extends AppCompatActivity{
 
         @Override
         public boolean onFling(MotionEvent motionEvent, MotionEvent motionEvent1, float v, float v1) {
-            Toast.makeText(GameActivity.this, "flung", Toast.LENGTH_SHORT).show();
-            Xvelocity_player = v%20;
-            Yvelocity_player = v1%20;
+            Toast.makeText(GameActivity.this, "flung : x = "+v+" y ="+v1, Toast.LENGTH_LONG).show();
+
+
+
+            Xvelocity_player = (v/500);
+            Yvelocity_player = (v1/500);
+
             return true;
         }
     }
