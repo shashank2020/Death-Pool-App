@@ -9,6 +9,8 @@ PROJECT BACKLOG (Release 1)
    - XML layout
    - Place to display high score
    - click functionality for Play button (Switch to Game Activity)
+   
+   Expected time : 30mins
 
 
 
@@ -21,4 +23,34 @@ PROJECT BACKLOG (Release 1)
    a) Create game Activity
    b) Write Classes for game elements, player, target & obstacle
    c) display game elements
+   
+   Expected time : 2 hours
 
+Report from release one
+   -----------------------
+
+   -completed all homescreen which works well and took approx. the expected time
+   -completed the tasks for game activity except the obstacles because our idea of what should happen
+        has changed while programming.
+
+
+
+Project backlog (Release 2)
+
+   High Score Screen
+   -needs to update on each player death and get it's content from an array of scores
+        a) create a place to store scores
+        b) attach the values in the high score table to those scores
+
+        Expected time : 1.5hours
+
+   Game Screen
+   - each time the player hits the target the screen should reset with a new set of obstacles and
+        score should increase
+        a) obstacle class with a 2d array of [level number][x,y x,y...]
+        b)method which removes previous obstacles and replaces with new ones on target hit
+   - update high score table if necessary
+        a) on player death write a method which takes current score and checks it against the
+        high score table, if it is necessary, insert the current score.
+
+        Expected time : 3 hours
