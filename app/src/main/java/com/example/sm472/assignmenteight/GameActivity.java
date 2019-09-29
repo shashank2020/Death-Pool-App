@@ -2,6 +2,7 @@ package com.example.sm472.assignmenteight;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -82,6 +83,8 @@ public class GameActivity extends AppCompatActivity{
                 player=null;
                 Xvelocity_player=0;
                 Yvelocity_player=0;
+//                SharedPreferences sharedPreferences = getSharedPreferences("high_score",MODE_PRIVATE);
+//                SharedPreferences.Editor editor = sharedPreferences.edit();
 
 
             }
