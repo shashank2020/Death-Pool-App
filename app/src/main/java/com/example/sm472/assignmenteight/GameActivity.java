@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class GameActivity extends AppCompatActivity{
@@ -21,9 +22,10 @@ public class GameActivity extends AppCompatActivity{
     Player player ;
     float Xvelocity_player;
     float Yvelocity_player;
+    TextView scoreView;
     //TARGET OBJECT
     Target target;
-
+    private String score;
     //variables
     float StartX, StartY;
 
@@ -68,12 +70,17 @@ public class GameActivity extends AppCompatActivity{
 
             target.Draw(canvas);
 
+
+            //if player touches the target reset player position and increase score
             if(player.collision(target))
             {
                 Log.i("TAG","BOOOOOOOOOOOOOOOOOOOOOOOOOOOM");
                 player=null;
                 Xvelocity_player=0;
                 Yvelocity_player=0;
+
+                scoreView.setText(getScore());
+
             }
             invalidate();
 
@@ -145,6 +152,10 @@ public class GameActivity extends AppCompatActivity{
 
         Yvelocity_player=0;
         Xvelocity_player=0;
+        score ="0";
+
+        //get the score textview
+        scoreView = (TextView)findViewById(R.id.score_text);
 
         GraphicsView graphicsview = new GraphicsView(this);
         ConstraintLayout c = (ConstraintLayout)findViewById(R.id.gamelayout);
@@ -152,5 +163,16 @@ public class GameActivity extends AppCompatActivity{
 
     }
 
+
+
+
+    //get string value of the updated score
+    private String getScore()
+    {
+        int a = Integer.parseInt(score);
+        a++;
+        score = Integer.toString(a);
+        return score;
+    }
 
 }
