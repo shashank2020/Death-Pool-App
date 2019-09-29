@@ -1,11 +1,16 @@
 package com.example.sm472.assignmenteight;
 
+import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.support.constraint.ConstraintLayout;
+import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 
 public class Player extends GameElement {
 
@@ -14,6 +19,9 @@ public class Player extends GameElement {
     Canvas canvas;
     boolean invertx;
     boolean inverty;
+
+
+
     public Player(float x,float y,int r,int color,int stroke,Canvas c)
     {
         super(x,y,r);
@@ -24,6 +32,8 @@ public class Player extends GameElement {
         canvas =c;
         invertx=false;
         inverty=false;
+
+
 
     }
 
@@ -89,6 +99,5 @@ public class Player extends GameElement {
         invertx=false;
         inverty=false;
     }
-
 
 }

@@ -13,6 +13,9 @@ import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class GameActivity extends AppCompatActivity{
@@ -21,12 +24,13 @@ public class GameActivity extends AppCompatActivity{
     Player player ;
     float Xvelocity_player;
     float Yvelocity_player;
+    TextView scoreView;
     //TARGET OBJECT
     Target target;
-
+    private String score;
     //variables
     float StartX, StartY;
-
+    Animation shake;
 
 
 
@@ -68,12 +72,18 @@ public class GameActivity extends AppCompatActivity{
 
             target.Draw(canvas);
 
+
+            //if player touches the target reset player position and increase score
             if(player.collision(target))
             {
+                this.startAnimation(shake);
+                scoreView.setText(getScore());
                 Log.i("TAG","BOOOOOOOOOOOOOOOOOOOOOOOOOOOM");
                 player=null;
                 Xvelocity_player=0;
                 Yvelocity_player=0;
+
+
             }
             invalidate();
 
@@ -117,7 +127,7 @@ public class GameActivity extends AppCompatActivity{
 
         @Override
         public boolean onFling(MotionEvent motionEvent, MotionEvent motionEvent1, float v, float v1) {
-            Toast.makeText(GameActivity.this, "flung : x = "+v+" y ="+v1, Toast.LENGTH_LONG).show();
+
 
 
 
@@ -143,8 +153,14 @@ public class GameActivity extends AppCompatActivity{
                 | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION;
         getWindow().getDecorView().setSystemUiVisibility(uioptions);
 
+        shake = AnimationUtils.loadAnimation(this,R.anim.shake);
+
         Yvelocity_player=0;
         Xvelocity_player=0;
+        score ="0";
+
+        //get the score textview
+        scoreView = (TextView)findViewById(R.id.score_text);
 
         GraphicsView graphicsview = new GraphicsView(this);
         ConstraintLayout c = (ConstraintLayout)findViewById(R.id.gamelayout);
@@ -152,5 +168,16 @@ public class GameActivity extends AppCompatActivity{
 
     }
 
+
+
+
+    //get string value of the updated score
+    private String getScore()
+    {
+        int a = Integer.parseInt(score);
+        a++;
+        score = Integer.toString(a);
+        return score;
+    }
 
 }
