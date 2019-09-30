@@ -35,13 +35,17 @@ public class GameActivity extends AppCompatActivity{
     TextView scoreView;
     //TARGET OBJECT
     Target target;
+    //OBSTACLE OBJECTS
+    Obstacle ob1;
+    Obstacle ob2;
     private String score;
     //variables
     float StartX, StartY;
     Animation shake;
-    SharedPreferences.Editor editor;
-    Set<String> s;
-    List<String> sc;
+    float ob1speed;
+    float ob2speed;
+
+
 
     class GraphicsView extends View implements GestureDetector.OnGestureListener{
         private GestureDetector gestureDetector;
@@ -71,14 +75,25 @@ public class GameActivity extends AppCompatActivity{
                 StartX = (canvas.getWidth()/2);
                 target = new Target(StartX,StartY,65,getColor(R.color.targetColor),getColor(R.color.white));
             }
+            if(ob1==null)
+            {
+                StartX = (canvas.getWidth()/5);
+                StartY = canvas.getHeight()/2;
+                ob1 = new Obstacle(StartX, StartY, 35, getColor(R.color.colorPrimaryDark), getColor(R.color.colorAccent), canvas);
+                StartX = (canvas.getWidth()/5)*4;
+                ob2 = new Obstacle(StartX, StartY, 35, getColor(R.color.colorPrimaryDark), getColor(R.color.colorAccent), canvas);
+            }
 
             player.move(Xvelocity_player,Yvelocity_player);
+            ob1.Move(player, ob1speed);
+            ob2.Move(player, ob2speed);
             //DRAW PLAYER
             player.Draw(canvas);
             //DRAW TARGET
-
-
             target.Draw(canvas);
+            //DRAW OBSTACLES
+            ob1.Draw(canvas);
+            ob2.Draw(canvas);
 
 
             //if player touches the target reset player position and increase score
@@ -91,15 +106,33 @@ public class GameActivity extends AppCompatActivity{
                 Xvelocity_player=0;
                 Yvelocity_player=0;
 
-                sc.add(score);
+                //Increase speed of obstacles
+                ob1speed *= 1.05;
+                ob2speed *= 1.05;
 
 
+                SharedPreferences sharedPreferences = getSharedPreferences("high_score",MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putInt("score",Integer.parseInt(score));
+                editor.commit();
+
+            }
+            if (player.collision(ob1)|| player.collision(ob2))
+            {
+                score = "0";
+                scoreView.setText(getScore());
+                reset();
 
             }
             invalidate();
 
-        }
 
+
+        }
+        protected void reset()
+        {
+           loadActivity();
+        }
 
 
 
@@ -152,9 +185,13 @@ public class GameActivity extends AppCompatActivity{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+
+        loadActivity();
+    }
+    protected void loadActivity()
+    {
         setContentView(R.layout.activity_game);
-
-
         ActionBar actionBar = (ActionBar) getSupportActionBar();
         actionBar.hide();
 
@@ -165,23 +202,23 @@ public class GameActivity extends AppCompatActivity{
         getWindow().getDecorView().setSystemUiVisibility(uioptions);
 
         shake = AnimationUtils.loadAnimation(this,R.anim.shake);
-        SharedPreferences sharedPreferences = getSharedPreferences("high_score",MODE_PRIVATE);
-        editor = sharedPreferences.edit();
 
+        ob1 = null;
+        ob2 = null;
+        player = null;
+        target = null;
         Yvelocity_player=0;
         Xvelocity_player=0;
         score ="0";
-        sc = new ArrayList<String>();
+        ob1speed = 1;
+        ob2speed = ob1speed/2;
+
         //get the score textview
         scoreView = (TextView)findViewById(R.id.score_text);
-
-
-
 
         GraphicsView graphicsview = new GraphicsView(this);
         ConstraintLayout c = (ConstraintLayout)findViewById(R.id.gamelayout);
         c.addView(graphicsview);
-
     }
 
 
