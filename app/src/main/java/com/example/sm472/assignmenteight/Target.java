@@ -28,4 +28,6 @@ public class Target extends GameElement {
         canvas.drawCircle(xpos,ypos,radius-15,paint);
 
     }
+
+
 }

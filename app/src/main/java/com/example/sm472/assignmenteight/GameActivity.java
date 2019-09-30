@@ -19,6 +19,8 @@ import android.view.animation.AnimationUtils;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.Random;
+
 public class GameActivity extends AppCompatActivity{
 
     //PLAYER OBJECT
@@ -77,15 +79,17 @@ public class GameActivity extends AppCompatActivity{
             //if player touches the target reset player position and increase score
             if(player.collision(target))
             {
+                respawnTarget(canvas);
                 this.startAnimation(shake);
                 scoreView.setText(getScore());
                 Log.i("TAG","BOOOOOOOOOOOOOOOOOOOOOOOOOOOM");
-                player=null;
                 Xvelocity_player=0;
                 Yvelocity_player=0;
-//                SharedPreferences sharedPreferences = getSharedPreferences("high_score",MODE_PRIVATE);
-//                SharedPreferences.Editor editor = sharedPreferences.edit();
 
+                SharedPreferences sharedPreferences = getSharedPreferences("high_score",MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putInt("score",Integer.parseInt(score));
+                editor.commit();
 
             }
             invalidate();
@@ -181,6 +185,25 @@ public class GameActivity extends AppCompatActivity{
         a++;
         score = Integer.toString(a);
         return score;
+    }
+
+    private void respawnTarget(Canvas canvas)
+    {
+        Random rand = new Random();
+        int n=0;
+        while(!(n >0+target.radius && n<canvas.getWidth()-target.radius)  )
+        {
+            n = rand.nextInt(canvas.getWidth()-target.radius);
+        }
+        StartX=n;
+        n=0;
+        while(!(n >0+target.radius && n<canvas.getHeight()-target.radius ) )
+        {
+            n = rand.nextInt(canvas.getHeight()-target.radius);
+        }
+        StartY= n;
+        target=null;
+        target = new Target(StartX,StartY,65,getColor(R.color.targetColor),getColor(R.color.white));
     }
 
 }
