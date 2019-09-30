@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.media.MediaPlayer;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -34,7 +35,6 @@ public class GameActivity extends AppCompatActivity{
     //variables
     float StartX, StartY;
     Animation shake;
-
 
 
 
@@ -162,12 +162,16 @@ public class GameActivity extends AppCompatActivity{
 
         shake = AnimationUtils.loadAnimation(this,R.anim.shake);
 
+
         Yvelocity_player=0;
         Xvelocity_player=0;
         score ="0";
 
         //get the score textview
         scoreView = (TextView)findViewById(R.id.score_text);
+
+
+
 
         GraphicsView graphicsview = new GraphicsView(this);
         ConstraintLayout c = (ConstraintLayout)findViewById(R.id.gamelayout);
