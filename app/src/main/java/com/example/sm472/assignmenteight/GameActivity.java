@@ -20,7 +20,11 @@ import android.view.animation.AnimationUtils;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Random;
+import java.util.Set;
 
 public class GameActivity extends AppCompatActivity{
 
@@ -248,4 +252,11 @@ public class GameActivity extends AppCompatActivity{
         target = new Target(StartX,StartY,65,getColor(R.color.targetColor),getColor(R.color.white));
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        s = new HashSet<String>(sc);
+        editor.putStringSet("score",s);
+        editor.commit();
+    }
 }
