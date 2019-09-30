@@ -20,7 +20,11 @@ import android.view.animation.AnimationUtils;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Random;
+import java.util.Set;
 
 public class GameActivity extends AppCompatActivity{
 
@@ -35,8 +39,9 @@ public class GameActivity extends AppCompatActivity{
     //variables
     float StartX, StartY;
     Animation shake;
-
-
+    SharedPreferences.Editor editor;
+    Set<String> s;
+    List<String> sc;
 
     class GraphicsView extends View implements GestureDetector.OnGestureListener{
         private GestureDetector gestureDetector;
@@ -86,10 +91,9 @@ public class GameActivity extends AppCompatActivity{
                 Xvelocity_player=0;
                 Yvelocity_player=0;
 
-                SharedPreferences sharedPreferences = getSharedPreferences("high_score",MODE_PRIVATE);
-                SharedPreferences.Editor editor = sharedPreferences.edit();
-                editor.putInt("score",Integer.parseInt(score));
-                editor.commit();
+                sc.add(score);
+
+
 
             }
             invalidate();
@@ -161,12 +165,13 @@ public class GameActivity extends AppCompatActivity{
         getWindow().getDecorView().setSystemUiVisibility(uioptions);
 
         shake = AnimationUtils.loadAnimation(this,R.anim.shake);
-
+        SharedPreferences sharedPreferences = getSharedPreferences("high_score",MODE_PRIVATE);
+        editor = sharedPreferences.edit();
 
         Yvelocity_player=0;
         Xvelocity_player=0;
         score ="0";
-
+        sc = new ArrayList<String>();
         //get the score textview
         scoreView = (TextView)findViewById(R.id.score_text);
 
@@ -210,4 +215,11 @@ public class GameActivity extends AppCompatActivity{
         target = new Target(StartX,StartY,65,getColor(R.color.targetColor),getColor(R.color.white));
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        s = new HashSet<String>(sc);
+        editor.putStringSet("score",s);
+        editor.commit();
+    }
 }
