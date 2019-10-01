@@ -12,6 +12,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
@@ -38,22 +39,32 @@ public class HiscoreActivity extends AppCompatActivity {
         listView.setAdapter(arrayAdapter);
         SharedPreferences sharedpref = getSharedPreferences("high_score", this.MODE_PRIVATE);
        Set<String> s = sharedpref.getStringSet("score",null);
-
+        if(s==null)
+        {
+            SharedPreferences.Editor editor = sharedpref.edit();
+            editor = sharedpref.edit();
+            editor.putStringSet("score", new HashSet<String>());
+            editor.commit();
+            s = sharedpref.getStringSet("score",null);
+        }
         ArrayList<String> a = new ArrayList<String>(s);
         List<Integer> sa = new ArrayList<Integer>();
 
         for(String x : a)
         {
+            if(!x.equals("0"))
             sa.add(Integer.parseInt(x));
         }
 
         Collections.sort(sa, Collections.<Integer>reverseOrder());
-        list.add(sa.get(0).toString());
-        list.add(sa.get(1).toString());
-        list.add(sa.get(2).toString());
-        list.add(sa.get(3).toString());
-        list.add(sa.get(4).toString());
-
+        try {
+            list.add(sa.get(0).toString());
+            list.add(sa.get(1).toString());
+            list.add(sa.get(2).toString());
+            list.add(sa.get(3).toString());
+            list.add(sa.get(4).toString());
+        }
+        catch (Exception e){}
 Toast.makeText(this,sa.toString(),Toast.LENGTH_LONG).show();
 
         arrayAdapter.notifyDataSetChanged();
