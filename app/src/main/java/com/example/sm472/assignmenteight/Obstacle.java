@@ -26,21 +26,71 @@ public class Obstacle extends GameElement {
 
     protected void Move(Player player, float speed)
     {
-        if(player.ypos< this.ypos)
-        {
-            ypos-= speed;
+
+
+        float x = xpos;
+        float y = ypos;
+        float x1 = player.xpos;
+        float y1 = player.ypos;
+
+        float perp = x-x1;
+        float base = y-y1;
+        float hyp = (float)Math.sqrt(Math.pow(base,2)+Math.pow(perp,2));
+
+
+
+        if(xpos<=player.xpos && ypos<=player.ypos) {
+
+            if (player.ypos < this.ypos) {
+                ypos += speed * (base / hyp);
+            } else {
+                ypos -= speed * (base / hyp);
+            }
+            if (player.xpos < this.xpos) {
+                xpos += speed * (perp / hyp);
+            } else {
+                xpos -= speed * (perp / hyp);
+            }
         }
-        else
-        {
-            ypos += speed;
+        if(xpos>=player.xpos && ypos<=player.ypos) {
+
+            if (player.ypos < this.ypos) {
+                ypos += speed * (base / hyp);
+            } else {
+                ypos -= speed * (base / hyp);
+            }
+            if (player.xpos < this.xpos) {
+                xpos -= speed * (perp / hyp);
+            } else {
+                xpos += speed * (perp / hyp);
+            }
         }
-        if(player.xpos < this.xpos)
-        {
-            xpos -= speed;
+        if(xpos>=player.xpos && ypos>=player.ypos) {
+
+            if (player.ypos < this.ypos) {
+                ypos -= speed * (base / hyp);
+            } else {
+                ypos += speed * (base / hyp);
+            }
+            if (player.xpos < this.xpos) {
+                xpos -= speed * (perp / hyp);
+            } else {
+                xpos += speed * (perp / hyp);
+            }
         }
-        else
-        {
-            xpos += speed;
+        if(xpos<=player.xpos && ypos>=player.ypos) {
+
+            if (player.ypos < this.ypos) {
+                ypos -= speed * (base / hyp);
+            } else {
+                ypos += speed * (base / hyp);
+            }
+            if (player.xpos < this.xpos) {
+                xpos += speed * (perp / hyp);
+            } else {
+                xpos -= speed * (perp / hyp);
+            }
         }
+
     }
 }
