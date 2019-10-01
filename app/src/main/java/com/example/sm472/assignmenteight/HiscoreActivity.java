@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -39,22 +40,21 @@ public class HiscoreActivity extends AppCompatActivity {
        Set<String> s = sharedpref.getStringSet("score",null);
 
         ArrayList<String> a = new ArrayList<String>(s);
-        List<String> sa = new ArrayList<String>();
+        List<Integer> sa = new ArrayList<Integer>();
 
         for(String x : a)
         {
-            sa.add(x);
+            sa.add(Integer.parseInt(x));
         }
 
+        Collections.sort(sa, Collections.<Integer>reverseOrder());
+        list.add(sa.get(0).toString());
+        list.add(sa.get(1).toString());
+        list.add(sa.get(2).toString());
+        list.add(sa.get(3).toString());
+        list.add(sa.get(4).toString());
 
-        for(int i=0;i<sa.size();i++)
-        {
-            if(i<5)
-           list.add(sa.get(i).toString());
-            else
-                break;
-        }
-        Collections.sort(list, Collections.<String>reverseOrder());
+Toast.makeText(this,sa.toString(),Toast.LENGTH_LONG).show();
 
         arrayAdapter.notifyDataSetChanged();
 
