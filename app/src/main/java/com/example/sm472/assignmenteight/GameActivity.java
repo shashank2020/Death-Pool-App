@@ -44,6 +44,10 @@ public class GameActivity extends AppCompatActivity{
     Animation shake;
     float ob1speed;
     float ob2speed;
+    SharedPreferences.Editor editor;
+    Set<String> s;
+    List<String> sc;
+    SharedPreferences sharedPreferences;
 
 
 
@@ -111,14 +115,14 @@ public class GameActivity extends AppCompatActivity{
                 ob2speed *= 1.05;
 
 
-                SharedPreferences sharedPreferences = getSharedPreferences("high_score",MODE_PRIVATE);
-                SharedPreferences.Editor editor = sharedPreferences.edit();
-                editor.putInt("score",Integer.parseInt(score));
-                editor.commit();
+
+
 
             }
             if (player.collision(ob1)|| player.collision(ob2))
             {
+
+                sc.add(score);
                 score = "0";
                 scoreView.setText(getScore());
                 reset();
@@ -216,6 +220,14 @@ public class GameActivity extends AppCompatActivity{
         //get the score textview
         scoreView = (TextView)findViewById(R.id.score_text);
 
+
+        if(editor == null && sc ==null && sharedPreferences ==null) {
+            sharedPreferences= getSharedPreferences("high_score",MODE_PRIVATE);
+            editor = sharedPreferences.edit();
+           // Set<String> temp = sharedPreferences.getStringSet("high_score",null);
+            sc = new ArrayList<String>();
+        }
+
         GraphicsView graphicsview = new GraphicsView(this);
         ConstraintLayout c = (ConstraintLayout)findViewById(R.id.gamelayout);
         c.addView(graphicsview);
@@ -250,11 +262,13 @@ public class GameActivity extends AppCompatActivity{
         StartY= n;
         target=null;
         target = new Target(StartX,StartY,65,getColor(R.color.targetColor),getColor(R.color.white));
+
     }
 
     @Override
     protected void onPause() {
         super.onPause();
+        sc.add(score);
         s = new HashSet<String>(sc);
         editor.putStringSet("score",s);
         editor.commit();
