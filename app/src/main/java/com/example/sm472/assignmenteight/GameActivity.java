@@ -223,11 +223,12 @@ public class GameActivity extends AppCompatActivity{
 
         if(editor == null && sc ==null && sharedPreferences ==null) {
             sharedPreferences= getSharedPreferences("high_score",MODE_PRIVATE);
+
             editor = sharedPreferences.edit();
-            editor.putStringSet("score",new HashSet<String>());
+            Set<String> temp = sharedPreferences.getStringSet("score",null);
 
 
-            sc = new ArrayList<String>();
+            sc = new ArrayList<String>(temp);
         }
 
         GraphicsView graphicsview = new GraphicsView(this);
