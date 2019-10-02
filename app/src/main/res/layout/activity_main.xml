@@ -33,43 +33,38 @@
         app:layout_constraintBottom_toTopOf="@id/play_button"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"/>
-
     <Button
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintHorizontal_weight="1"
+        android:padding="15sp"
         android:id="@+id/play_button"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:background="#00000000"
-        android:fontFamily="@font/display"
-        android:hapticFeedbackEnabled="false"
-        android:onClick="OnClickplay"
-        android:padding="15sp"
         android:text="@string/Play"
-        android:textColor="@color/white"
         android:textSize="25sp"
+        android:background="#00000000"
+        app:layout_constraintTop_toBottomOf="@id/high_score"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_weight="1"
         app:layout_constraintLeft_toLeftOf="parent"
-
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/high_score" />
-
+        android:fontFamily="@font/display"
+        android:textColor="@color/white"
+        app:layout_constraintRight_toLeftOf="@id/button_hiscore"
+        android:onClick="OnClickplay"/>
     <Button
-        android:id="@+id/button_hiscore"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:background="#00000000"
-        android:fontFamily="@font/display"
-        android:hapticFeedbackEnabled="false"
-        android:onClick="onClickHiscore"
-        android:padding="15sp"
-        android:text="@string/High_score"
-        android:textColor="@color/white"
-        android:textSize="25sp"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHorizontal_weight="1"
-        app:layout_constraintLeft_toLeftOf="parent"
+        android:padding="15sp"
+        android:fontFamily="@font/display"
+        android:textColor="@color/white"
+        android:id="@+id/button_hiscore"
+        android:text="@string/High_score"
+        android:textSize="25sp"
+        android:background="#00000000"
+        app:layout_constraintTop_toBottomOf="@id/high_score"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/play_button" />
+        app:layout_constraintLeft_toRightOf="@id/play_button"
+        android:onClick="onClickHiscore"/>
 
 
 </android.support.constraint.ConstraintLayout>

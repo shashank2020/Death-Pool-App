@@ -6,19 +6,15 @@
     android:layout_height="match_parent"
     tools:context=".HiscoreActivity"
     android:background="@drawable/gradient"
-    android:orientation="vertical"
-    android:layout_gravity="center">
-
-
+    android:orientation="vertical">
 
     <TextView
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/hiscore_title"
         android:padding="15sp"
         android:text="@string/top5"
         android:textSize="40sp"
-        android:textAlignment="center"
         android:fontFamily="@font/display"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toTopOf="@id/hiscore_list"
@@ -26,19 +22,17 @@
         app:layout_constraintRight_toRightOf="parent"
         android:textColor="@color/colorAccent"
         />
-
     <ListView
-        android:id="@+id/hiscore_list"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAlignment="center"
-        android:textDirection="ltr"
+        android:id="@+id/hiscore_list"
+        tools:listitem="@layout/listview_row"
+
+        app:layout_constraintTop_toBottomOf="@id/hiscore_title"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/hiscore_title" />
-
-
+        />
 
 
 </android.support.constraint.ConstraintLayout>
