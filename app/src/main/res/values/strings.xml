@@ -4,4 +4,7 @@
     <string name="High_score">High Score</string>
     <string name="Play">Play</string>
     <string name="top5">Top 5 High Scores</string>
+    <string name="dev_title">Dev</string>
+    <string name="alex">Alexander Towers</string>
+    <string name="shashank">shashank Mylarapu</string>
 </resources>

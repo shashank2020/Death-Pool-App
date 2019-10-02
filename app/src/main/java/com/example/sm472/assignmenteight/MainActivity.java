@@ -2,6 +2,7 @@ package com.example.sm472.assignmenteight;
 
 import android.app.ActivityOptions;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.media.MediaPlayer;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -9,7 +10,13 @@ import android.os.Bundle;
 import android.transition.Explode;
 import android.view.View;
 import android.view.Window;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Set;
 
 public class MainActivity extends AppCompatActivity {
     Intent intent;
@@ -18,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        setHighscore();
         setFullscreen();
         playMusic();
     }
@@ -36,6 +44,26 @@ public class MainActivity extends AppCompatActivity {
         intro_media.setLooping(true);
         intro_media.start();
     }
+    protected void setHighscore(){
+        TextView highscore = (TextView)findViewById(R.id.highscore_val);
+        SharedPreferences sharedPreferences = getSharedPreferences("high_score",this.MODE_PRIVATE);
+        Set<String> set = sharedPreferences.getStringSet("score",null);
+        if(set==null){
+           highscore.setText("0");
+        }
+        else {
+            List<String> scores = new ArrayList<>(set);
+
+            List<Integer> sa = new ArrayList<Integer>();
+            for(String x : scores){
+                if(!x.equals("0"))
+                    sa.add(Integer.parseInt(x));
+            }
+            Collections.sort(sa,Collections.<Integer>reverseOrder());
+            highscore.setText(sa.get(0).toString());
+        }
+
+    }
     @Override
     protected void onPause() {
         super.onPause();
@@ -45,6 +73,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         intro_media.start();
+        setHighscore();
     }
     @Override
     protected void onStart() {
