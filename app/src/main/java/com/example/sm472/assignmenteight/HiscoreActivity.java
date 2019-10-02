@@ -26,7 +26,7 @@ import java.util.List;
 import java.util.Set;
 
 public class HiscoreActivity extends AppCompatActivity {
-
+    Typeface typeface;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,7 +56,13 @@ public class HiscoreActivity extends AppCompatActivity {
                 // Set the text color of TextView (ListView Item)
                 tv.setTextColor(Color.WHITE);
                 tv.setTextSize(50);
-                Typeface typeface = getResources().getFont(R.font.display);
+                if(Build.VERSION.SDK_INT >= Integer.parseInt("23") && Build.VERSION.SDK_INT < Integer.parseInt("26")) {
+                     typeface = ResourcesCompat.getFont(getApplicationContext(), R.font.display);
+                }
+                else
+                {
+                    typeface = getResources().getFont( R.font.display);
+                }
                 tv.setTypeface(typeface);
                 tv.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
                 // Generate ListView Item using TextView
