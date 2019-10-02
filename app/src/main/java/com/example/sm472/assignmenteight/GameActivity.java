@@ -65,8 +65,6 @@ public class GameActivity extends AppCompatActivity{
         @Override
         protected void onDraw(Canvas canvas) {
             super.onDraw(canvas);
-
-
             //if player is null create with start position  .... DOING THIS CAUSE CANT SET POSITION OUTSIDE onDraw() CAUSE CAN'T ACCESS CANVAS IN ON CREATE
             if(player==null)
             {
@@ -90,7 +88,6 @@ public class GameActivity extends AppCompatActivity{
                 StartX = (canvas.getWidth()/5)*4;
                 ob2 = new Obstacle(StartX, StartY, 35, getColor(R.color.colorPrimaryDark), getColor(R.color.colorAccent), canvas);
             }
-
             player.move(Xvelocity_player,Yvelocity_player);
             ob1.Move(player, ob1speed);
             ob2.Move(player, ob2speed);
