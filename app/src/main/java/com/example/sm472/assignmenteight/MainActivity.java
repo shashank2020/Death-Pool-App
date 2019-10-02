@@ -52,15 +52,18 @@ public class MainActivity extends AppCompatActivity {
            highscore.setText("0");
         }
         else {
-            List<String> scores = new ArrayList<>(set);
+            try {
+                List<String> scores = new ArrayList<>(set);
 
-            List<Integer> sa = new ArrayList<Integer>();
-            for(String x : scores){
-                if(!x.equals("0"))
-                    sa.add(Integer.parseInt(x));
+                List<Integer> sa = new ArrayList<Integer>();
+                for (String x : scores) {
+                    if (!x.equals("0"))
+                        sa.add(Integer.parseInt(x));
+                }
+                Collections.sort(sa, Collections.<Integer>reverseOrder());
+                highscore.setText(sa.get(0).toString());
             }
-            Collections.sort(sa,Collections.<Integer>reverseOrder());
-            highscore.setText(sa.get(0).toString());
+            catch (Exception e){}
         }
 
     }
