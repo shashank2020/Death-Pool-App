@@ -13,8 +13,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.GestureDetector;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.TextView;
@@ -228,12 +231,19 @@ public class GameActivity extends AppCompatActivity{
             editor.putStringSet("score",new HashSet<String>());
             Set<String> temp = sharedPreferences.getStringSet("score",null);
 
-            if(temp!=null)
-            sc = new ArrayList<String>(temp);
+            if(temp!=null) {
+                sc = new ArrayList<String>(temp);
+                showToast();
+            }
             else
             sc = new ArrayList<>();
+
+            //display the flick gesture toast
+
         }
 
+
+        //set graphics view to the layout
         GraphicsView graphicsview = new GraphicsView(this);
         ConstraintLayout c = (ConstraintLayout)findViewById(R.id.gamelayout);
         c.addView(graphicsview);
@@ -278,5 +288,17 @@ public class GameActivity extends AppCompatActivity{
         s = new HashSet<String>(sc);
         editor.putStringSet("score",s);
         editor.commit();
+    }
+
+
+    private void showToast()
+    {
+        LayoutInflater inflater = getLayoutInflater();
+        View layout = inflater.inflate(R.layout.flick_toast_layout,(ViewGroup)findViewById(R.id.flick_toast));
+        Toast toast = new Toast(getApplicationContext());
+        toast.setGravity(Gravity.CENTER,0,0);
+        toast.setDuration(Toast.LENGTH_SHORT);
+        toast.setView(layout);
+        toast.show();
     }
 }

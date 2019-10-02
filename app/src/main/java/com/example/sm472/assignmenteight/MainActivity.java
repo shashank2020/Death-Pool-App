@@ -50,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        Toast.makeText(this,"START",Toast.LENGTH_SHORT).show();
+       // Toast.makeText(this,"START",Toast.LENGTH_SHORT).show();
         if(!intro_media.isPlaying()) {
             intro_media = MediaPlayer.create(this, R.raw.game);
             intro_media.setLooping(true);
@@ -61,14 +61,14 @@ public class MainActivity extends AppCompatActivity {
     public void OnClickplay(View v) {
 
         intro_media.stop();
-        Toast.makeText(this,"CLICKED",Toast.LENGTH_SHORT).show();
+       // Toast.makeText(this,"CLICKED",Toast.LENGTH_SHORT).show();
         intent = new Intent(this,GameActivity.class);
         startActivity(intent);
     }
 
 
     public void onClickHiscore(View view) {
-        Toast.makeText(this,"HISCORE_CLICKED",Toast.LENGTH_SHORT).show();
+      //  Toast.makeText(this,"HISCORE_CLICKED",Toast.LENGTH_SHORT).show();
         intent = new Intent(this,HiscoreActivity.class);
         startActivity(intent);
     }
