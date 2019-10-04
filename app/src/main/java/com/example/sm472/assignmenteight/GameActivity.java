@@ -51,7 +51,8 @@ public class GameActivity extends AppCompatActivity{
     Set<String> s;
     List<String> sc;
     SharedPreferences sharedPreferences;
-
+    MediaPlayer target_hit;
+    MediaPlayer obstacle_hit;
 
 
     class GraphicsView extends View implements GestureDetector.OnGestureListener{
@@ -113,6 +114,7 @@ public class GameActivity extends AppCompatActivity{
                 //Increase speed of obstacles
                 ob1speed *= 1.05;
                 ob2speed *= 1.05;
+                play_target_hit();
 
 
 
@@ -125,6 +127,7 @@ public class GameActivity extends AppCompatActivity{
                 sc.add(score);
                 score = "0";
                 scoreView.setText(getScore());
+                play_obstacle_hit();
                 reset();
 
             }
@@ -297,5 +300,18 @@ public class GameActivity extends AppCompatActivity{
         toast.setDuration(Toast.LENGTH_SHORT);
         toast.setView(layout);
         toast.show();
+    }
+
+    private void play_target_hit()
+    {
+        if(target_hit==null)
+        target_hit = MediaPlayer.create(this,R.raw.targethit);
+        target_hit.start();
+    }
+    private void play_obstacle_hit()
+    {
+        if(obstacle_hit==null)
+        obstacle_hit = MediaPlayer.create(this,R.raw.obstaclehit);
+        obstacle_hit.start();
     }
 }
