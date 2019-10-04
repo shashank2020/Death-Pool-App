@@ -106,7 +106,7 @@ public class GameActivity extends AppCompatActivity{
                 respawnTarget(canvas);
                 this.startAnimation(shake);
                 scoreView.setText(getScore());
-                Log.i("TAG","BOOOOOOOOOOOOOOOOOOOOOOOOOOOM");
+                //Log.i("TAG","BOOOOOOOOOOOOOOOOOOOOOOOOOOOM");
                 Xvelocity_player=0;
                 Yvelocity_player=0;
 
