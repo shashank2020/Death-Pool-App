@@ -1,10 +1,8 @@
 package com.example.sm472.assignmenteight;
 
 import android.graphics.Canvas;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.view.View;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
 
 public abstract class GameElement {
 
