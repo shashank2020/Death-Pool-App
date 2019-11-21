@@ -51,6 +51,24 @@ public class GameActivity extends AppCompatActivity{
     MediaPlayer target_hit;
     MediaPlayer obstacle_hit;
 
+    TextView pauseText;
+    private Boolean pauseOn = false;
+
+    public void onClickPause(View view) {
+        pauseOn = !pauseOn;
+        if(pauseOn) {
+            pauseText.setVisibility(View.VISIBLE);
+           scoreView.setVisibility(View.INVISIBLE);
+        }
+        else {
+            scoreView.setVisibility(View.VISIBLE);
+            pauseText.setVisibility(View.INVISIBLE);
+        }
+
+
+        }
+
+
 
     class GraphicsView extends View implements GestureDetector.OnGestureListener{
         private GestureDetector gestureDetector;
@@ -64,126 +82,121 @@ public class GameActivity extends AppCompatActivity{
         protected void onDraw(Canvas canvas) {
             super.onDraw(canvas);
             //if player is null create with start position  .... DOING THIS CAUSE CANT SET POSITION OUTSIDE onDraw() CAUSE CAN'T ACCESS CANVAS IN ON CREATE
-            if(player==null)
-            {
-                StartX = canvas.getWidth()/2;
-                StartY = ((canvas.getHeight()/5)*4);
+            if(pauseOn==false) {
+                if (player == null) {
+                    StartX = canvas.getWidth() / 2;
+                    StartY = ((canvas.getHeight() / 5) * 4);
 
-                player = new Player(StartX,StartY,50,getColor(R.color.playerColor),getColor(R.color.white),canvas);
+                    player = new Player(StartX, StartY, 50, getColor(R.color.playerColor), getColor(R.color.white), canvas);
+                }
+                //if target is null create new reason: SAME AS ABOVE
+                if (target == null) {
+                    StartY = ((canvas.getHeight() / 6));
+                    StartX = (canvas.getWidth() / 2);
+                    target = new Target(StartX, StartY, 65, getColor(R.color.targetColor), getColor(R.color.white));
+                }
+                if (ob1 == null) {
+                    StartX = (canvas.getWidth() / 5);
+                    StartY = canvas.getHeight() / 2;
+                    ob1 = new Obstacle(StartX, StartY, 35, getColor(R.color.colorPrimaryDark), getColor(R.color.colorAccent), canvas);
+                    StartX = (canvas.getWidth() / 5) * 4;
+                    ob2 = new Obstacle(StartX, StartY, 35, getColor(R.color.colorPrimaryDark), getColor(R.color.colorAccent), canvas);
+                }
+                player.move(Xvelocity_player, Yvelocity_player);
+                ob1.Move(player, ob1speed);
+                ob2.Move(player, ob2speed);
+                //DRAW PLAYER
+                player.Draw(canvas);
+                //DRAW TARGET
+                target.Draw(canvas);
+                //DRAW OBSTACLES
+                ob1.Draw(canvas);
+                ob2.Draw(canvas);
+
+
+                //if player touches the target reset player position and increase score
+                if (player.collision(target)) {
+                    respawnTarget(canvas);
+                    this.startAnimation(shake);
+                    scoreView.setText(getScore());
+                    //Log.i("TAG","BOOOOOOOOOOOOOOOOOOOOOOOOOOOM");
+                    Xvelocity_player = 0;
+                    Yvelocity_player = 0;
+
+                    //Increase speed of obstacles
+                    ob1speed *= 1.05;
+                    ob2speed *= 1.05;
+                    play_target_hit();
+
+
+                }
+                if (player.collision(ob1) || player.collision(ob2)) {
+
+                    sc.add(score);
+                    score = "0";
+                    scoreView.setText(getScore());
+                    play_obstacle_hit();
+                    reset();
+
+                }
             }
-            //if target is null create new reason: SAME AS ABOVE
-            if(target==null)
-            {
-                StartY = ((canvas.getHeight()/6));
-                StartX = (canvas.getWidth()/2);
-                target = new Target(StartX,StartY,65,getColor(R.color.targetColor),getColor(R.color.white));
-            }
-            if(ob1==null)
-            {
-                StartX = (canvas.getWidth()/5);
-                StartY = canvas.getHeight()/2;
-                ob1 = new Obstacle(StartX, StartY, 35, getColor(R.color.colorPrimaryDark), getColor(R.color.colorAccent), canvas);
-                StartX = (canvas.getWidth()/5)*4;
-                ob2 = new Obstacle(StartX, StartY, 35, getColor(R.color.colorPrimaryDark), getColor(R.color.colorAccent), canvas);
-            }
-            player.move(Xvelocity_player,Yvelocity_player);
-            ob1.Move(player, ob1speed);
-            ob2.Move(player, ob2speed);
-            //DRAW PLAYER
-            player.Draw(canvas);
-            //DRAW TARGET
-            target.Draw(canvas);
-            //DRAW OBSTACLES
-            ob1.Draw(canvas);
-            ob2.Draw(canvas);
 
-
-            //if player touches the target reset player position and increase score
-            if(player.collision(target))
-            {
-                respawnTarget(canvas);
-                this.startAnimation(shake);
-                scoreView.setText(getScore());
-                //Log.i("TAG","BOOOOOOOOOOOOOOOOOOOOOOOOOOOM");
-                Xvelocity_player=0;
-                Yvelocity_player=0;
-
-                //Increase speed of obstacles
-                ob1speed *= 1.05;
-                ob2speed *= 1.05;
-                play_target_hit();
-
-
-
+                invalidate();
 
 
             }
-            if (player.collision(ob1)|| player.collision(ob2))
+            protected void reset ()
             {
-
-                sc.add(score);
-                score = "0";
-                scoreView.setText(getScore());
-                play_obstacle_hit();
-                reset();
-
+                loadActivity();
             }
-            invalidate();
 
 
+            @Override
+            public boolean onTouchEvent (MotionEvent event){
+                if (gestureDetector.onTouchEvent(event)) {
+                    if(pauseOn==false)
+                    return true;
+                }
+                return super.onTouchEvent(event);
+            }
 
-        }
-        protected void reset()
-        {
-           loadActivity();
-        }
-
-
-
-        @Override
-        public boolean onTouchEvent (MotionEvent event) {
-            if(gestureDetector.onTouchEvent(event)) {
+            @Override
+            public boolean onDown (MotionEvent motionEvent){
                 return true;
             }
-            return super.onTouchEvent(event);
-        }
 
-        @Override
-        public boolean onDown(MotionEvent motionEvent) {
-            return true;
-        }
+            @Override
+            public void onShowPress (MotionEvent motionEvent){
 
-        @Override
-        public void onShowPress(MotionEvent motionEvent) {
+            }
 
-        }
+            @Override
+            public boolean onSingleTapUp (MotionEvent motionEvent){
+                return false;
+            }
 
-        @Override
-        public boolean onSingleTapUp(MotionEvent motionEvent) {
-            return false;
-        }
+            @Override
+            public boolean onScroll (MotionEvent motionEvent, MotionEvent motionEvent1,float v,
+            float v1){
+                return false;
+            }
 
-        @Override
-        public boolean onScroll(MotionEvent motionEvent, MotionEvent motionEvent1, float v, float v1) {
-            return false;
-        }
+            @Override
+            public void onLongPress (MotionEvent motionEvent){
 
-        @Override
-        public void onLongPress(MotionEvent motionEvent) {
+            }
 
-        }
-
-        @Override
-        public boolean onFling(MotionEvent motionEvent, MotionEvent motionEvent1, float v, float v1) {
+            @Override
+            public boolean onFling (MotionEvent motionEvent, MotionEvent motionEvent1,float v,
+            float v1){
 
 
+                Xvelocity_player = (v / 500);
+                Yvelocity_player = (v1 / 500);
+                player.flickReset();
+                return true;
+            }
 
-
-            Xvelocity_player = (v/500);
-            Yvelocity_player = (v1/500);
-            player.flickReset();
-            return true;
-        }
     }
 
     @Override
@@ -219,7 +232,7 @@ public class GameActivity extends AppCompatActivity{
 
         //get the score textview
         scoreView = (TextView)findViewById(R.id.score_text);
-
+        pauseText = findViewById(R.id.pauseText);
 
         if(editor == null && sc ==null && sharedPreferences ==null) {
             sharedPreferences= getSharedPreferences("high_score",MODE_PRIVATE);
