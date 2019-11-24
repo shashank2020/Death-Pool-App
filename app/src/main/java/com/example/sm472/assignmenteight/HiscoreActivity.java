@@ -30,6 +30,7 @@ import java.util.Set;
 
 public class HiscoreActivity extends AppCompatActivity {
     Typeface typeface;
+    int uioptions;
     private AdView adview;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,7 +55,7 @@ public class HiscoreActivity extends AppCompatActivity {
         actionBar.hide();
 
         //set fullscreen sticky immersive
-        int uioptions = View.SYSTEM_UI_FLAG_FULLSCREEN
+         uioptions = View.SYSTEM_UI_FLAG_FULLSCREEN
                 | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
                 | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION;
         getWindow().getDecorView().setSystemUiVisibility(uioptions);
@@ -124,4 +125,9 @@ public class HiscoreActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        getWindow().getDecorView().setSystemUiVisibility(uioptions);
+    }
 }

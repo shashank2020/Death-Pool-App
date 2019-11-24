@@ -58,6 +58,7 @@ public class GameActivity extends AppCompatActivity{
 
     TextView gameOverText;
     Button restartButton;
+    int uioptions;
 
 
 
@@ -123,6 +124,7 @@ public class GameActivity extends AppCompatActivity{
                 }
                 if (player.collision(ob1) || player.collision(ob2)) {
 
+                    this.startAnimation(shake);
                     sc.add(score);
                     score = "0";
                     scoreView.setText(getScore());
@@ -210,7 +212,7 @@ public class GameActivity extends AppCompatActivity{
         actionBar.hide();
 
         //set fullscreen sticky immersive
-        int uioptions = View.SYSTEM_UI_FLAG_FULLSCREEN
+        uioptions = View.SYSTEM_UI_FLAG_FULLSCREEN
                 | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
                 | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION;
         getWindow().getDecorView().setSystemUiVisibility(uioptions);
@@ -300,6 +302,11 @@ public class GameActivity extends AppCompatActivity{
         editor.commit();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        getWindow().getDecorView().setSystemUiVisibility(uioptions);
+    }
 
     private void showToast()
     {
