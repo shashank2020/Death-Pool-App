@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -53,20 +54,10 @@ public class GameActivity extends AppCompatActivity{
 
     TextView pauseText;
     private Boolean pauseOn = false;
+    Button pause;
 
-    public void onClickPause(View view) {
-        pauseOn = !pauseOn;
-        if(pauseOn) {
-            pauseText.setVisibility(View.VISIBLE);
-           scoreView.setVisibility(View.INVISIBLE);
-        }
-        else {
-            scoreView.setVisibility(View.VISIBLE);
-            pauseText.setVisibility(View.INVISIBLE);
-        }
-
-
-        }
+    TextView gameOverText;
+    Button restartButton;
 
 
 
@@ -136,7 +127,7 @@ public class GameActivity extends AppCompatActivity{
                     score = "0";
                     scoreView.setText(getScore());
                     play_obstacle_hit();
-                    reset();
+                    gameOver();
 
                 }
             }
@@ -145,7 +136,7 @@ public class GameActivity extends AppCompatActivity{
 
 
             }
-            protected void reset ()
+            public void reset ()
             {
                 loadActivity();
             }
@@ -162,7 +153,10 @@ public class GameActivity extends AppCompatActivity{
 
             @Override
             public boolean onDown (MotionEvent motionEvent){
-                return true;
+                if(pauseOn==false)
+                    return true;
+                else
+                    return false;
             }
 
             @Override
@@ -190,11 +184,14 @@ public class GameActivity extends AppCompatActivity{
             public boolean onFling (MotionEvent motionEvent, MotionEvent motionEvent1,float v,
             float v1){
 
-
-                Xvelocity_player = (v / 500);
-                Yvelocity_player = (v1 / 500);
-                player.flickReset();
-                return true;
+                if(pauseOn==false) {
+                    Xvelocity_player = (v / 500);
+                    Yvelocity_player = (v1 / 500);
+                    player.flickReset();
+                    return true;
+                }
+                else
+                    return false;
             }
 
     }
@@ -233,6 +230,9 @@ public class GameActivity extends AppCompatActivity{
         //get the score textview
         scoreView = (TextView)findViewById(R.id.score_text);
         pauseText = findViewById(R.id.pauseText);
+        pause = findViewById(R.id.pauseButton);
+        gameOverText = findViewById(R.id.GameOverText);
+        restartButton = findViewById(R.id.restartButton);
 
         if(editor == null && sc ==null && sharedPreferences ==null) {
             sharedPreferences= getSharedPreferences("high_score",MODE_PRIVATE);
@@ -323,5 +323,41 @@ public class GameActivity extends AppCompatActivity{
         if(obstacle_hit==null)
         obstacle_hit = MediaPlayer.create(this,R.raw.obstaclehit);
         obstacle_hit.start();
+    }
+    public void onClickPause(View view) {
+        pauseOn = !pauseOn;
+        if(pauseOn) {
+            pauseText.setVisibility(View.VISIBLE);
+            scoreView.setVisibility(View.INVISIBLE);
+            pause.setCompoundDrawablesWithIntrinsicBounds(null,null,getResources().getDrawable( R.drawable.play),null);
+
+        }
+        else {
+            scoreView.setVisibility(View.VISIBLE);
+            pauseText.setVisibility(View.INVISIBLE);
+            pause.setCompoundDrawablesWithIntrinsicBounds(null,null,getResources().getDrawable( R.drawable.pause),null);
+        }
+
+
+    }
+    public void onClickRstart(View view) {
+        pause.setVisibility(View.VISIBLE);
+        scoreView.setVisibility(View.VISIBLE);
+        gameOverText.setVisibility(View.INVISIBLE);
+        restartButton.setVisibility(View.INVISIBLE);
+        pauseOn = false;
+        loadActivity();
+
+    }
+
+
+    public void gameOver()
+    {
+        gameOverText.setVisibility(View.VISIBLE);
+        restartButton.setVisibility(View.VISIBLE);
+        pauseOn = true;
+        pause.setVisibility(View.INVISIBLE);
+        scoreView.setVisibility(View.INVISIBLE);
+
     }
 }
