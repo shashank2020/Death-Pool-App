@@ -22,6 +22,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
@@ -58,7 +59,13 @@ public class GameActivity extends AppCompatActivity{
 
     TextView gameOverText;
     Button restartButton;
+    Button homeButton;
+    TextView scoreText;
+    TextView scoreValue;
+    TextView hScoreTxt;
+    TextView hScoreValue;
     int uioptions;
+    String highScore;
 
 
 
@@ -125,6 +132,7 @@ public class GameActivity extends AppCompatActivity{
                 if (player.collision(ob1) || player.collision(ob2)) {
 
                     this.startAnimation(shake);
+                    highScore =  scoreView.getText().toString();
                     sc.add(score);
                     score = "0";
                     scoreView.setText(getScore());
@@ -203,6 +211,7 @@ public class GameActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
 
 
+
         loadActivity();
     }
     protected void loadActivity()
@@ -235,6 +244,11 @@ public class GameActivity extends AppCompatActivity{
         pause = findViewById(R.id.pauseButton);
         gameOverText = findViewById(R.id.GameOverText);
         restartButton = findViewById(R.id.restartButton);
+        homeButton = findViewById(R.id.homeButton);
+        scoreText = findViewById(R.id.scoreCurrentText);
+        scoreValue = findViewById(R.id.scoreCurrentValue);
+        hScoreTxt = findViewById(R.id.highScoreText);
+        hScoreValue = findViewById(R.id.highScoreValue);
 
         if(editor == null && sc ==null && sharedPreferences ==null) {
             sharedPreferences= getSharedPreferences("high_score",MODE_PRIVATE);
@@ -352,19 +366,66 @@ public class GameActivity extends AppCompatActivity{
         scoreView.setVisibility(View.VISIBLE);
         gameOverText.setVisibility(View.INVISIBLE);
         restartButton.setVisibility(View.INVISIBLE);
+        scoreValue.setVisibility(View.INVISIBLE);
+        scoreText.setVisibility(View.INVISIBLE);
+        hScoreValue.setVisibility(View.INVISIBLE);
+        hScoreTxt.setVisibility(View.INVISIBLE);
+
         pauseOn = false;
         loadActivity();
 
+    }
+    public void onClickHome(View view) {
+        finish();
     }
 
 
     public void gameOver()
     {
+
+
+
         gameOverText.setVisibility(View.VISIBLE);
         restartButton.setVisibility(View.VISIBLE);
+        scoreValue.setVisibility(View.VISIBLE);
+        scoreText.setVisibility(View.VISIBLE);
+        hScoreValue.setVisibility(View.VISIBLE);
+        hScoreTxt.setVisibility(View.VISIBLE);
+        scoreValue.setText(highScore);
+
+
+        SharedPreferences sharedPreferences = getSharedPreferences("high_score",this.MODE_PRIVATE);
+        Set<String> set = sharedPreferences.getStringSet("score",null);
+        if(set==null){
+            hScoreValue.setText(highScore);
+
+        }
+        else {
+            try {
+                List<String> scores = new ArrayList<>(set);
+
+                List<Integer> sa = new ArrayList<Integer>();
+                for (String x : scores) {
+                    if (!x.equals("0"))
+                        sa.add(Integer.parseInt(x));
+                }
+                Collections.sort(sa, Collections.<Integer>reverseOrder());
+                if(sa.get(0) < Integer.parseInt(highScore))
+                    hScoreValue.setText(highScore);
+                else
+                hScoreValue.setText(sa.get(0).toString());
+
+            }
+            catch (Exception e){}
+        }
+
         pauseOn = true;
         pause.setVisibility(View.INVISIBLE);
         scoreView.setVisibility(View.INVISIBLE);
+        homeButton.setVisibility(View.VISIBLE);
 
     }
+
+
+
 }

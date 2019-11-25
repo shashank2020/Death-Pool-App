@@ -26,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
     MediaPlayer intro_media;
     private AdView adview;
     int uioptions;
+    int hs;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,6 +68,7 @@ public class MainActivity extends AppCompatActivity {
         Set<String> set = sharedPreferences.getStringSet("score",null);
         if(set==null){
            highscore.setText("0");
+           hs =0;
         }
         else {
             try {
@@ -79,6 +81,7 @@ public class MainActivity extends AppCompatActivity {
                 }
                 Collections.sort(sa, Collections.<Integer>reverseOrder());
                 highscore.setText(sa.get(0).toString());
+                hs = sa.get(0);
             }
             catch (Exception e){}
         }
@@ -111,6 +114,7 @@ public class MainActivity extends AppCompatActivity {
         intro_media.stop();
        // Toast.makeText(this,"CLICKED",Toast.LENGTH_SHORT).show();
         intent = new Intent(this,GameActivity.class);
+        intent.putExtra("HS",Integer.toString(hs));
         startActivity(intent);
     }
     public void onClickHiscore(View view) {
