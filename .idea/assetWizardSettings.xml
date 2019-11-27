@@ -64,7 +64,7 @@
                                             <option name="values">
                                               <map>
                                                 <entry key="color" value="000000" />
-                                                <entry key="scalingPercent" value="66" />
+                                                <entry key="scalingPercent" value="69" />
                                               </map>
                                             </option>
                                           </PersistentState>
@@ -76,8 +76,7 @@
                                     <map>
                                       <entry key="backgroundImage" value="C:\Users\Archie\Desktop\game icon-assets\back.png" />
                                       <entry key="foregroundImage" value="C:\Users\Archie\Desktop\game icon-assets\fore.png" />
-                                      <entry key="generateWebIcon" value="false" />
-                                      <entry key="legacyIconShape" value="CIRCLE" />
+                                      <entry key="generateRoundIcon" value="false" />
                                     </map>
                                   </option>
                                 </PersistentState>
