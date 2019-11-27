@@ -399,11 +399,7 @@ public class GameActivity extends AppCompatActivity{
         scoreValue.setText(highScore);
 
 
-        if(sc==null){
-            hScoreValue.setText("0");
 
-        }
-        else {
             try {
 
 
@@ -413,16 +409,17 @@ public class GameActivity extends AppCompatActivity{
                         sa.add(Integer.parseInt(x));
                 }
                 Collections.sort(sa, Collections.<Integer>reverseOrder());
-                if(highScore.equals("0"))
+
+                 if(sa.get(0) <= Integer.parseInt(highScore))
                     hScoreValue.setText(highScore);
-                else if(sa.get(0) < Integer.parseInt(highScore))
-                    hScoreValue.setText(highScore);
+
                 else
                 hScoreValue.setText(sa.get(0).toString());
 
             }
             catch (Exception e){}
-        }
+         if(hScoreValue.getText().equals(""))
+        hScoreValue.setText("0");
 
         pauseOn = true;
         pause.setVisibility(View.INVISIBLE);
