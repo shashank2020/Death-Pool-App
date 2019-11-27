@@ -135,7 +135,7 @@ public class GameActivity extends AppCompatActivity{
                     highScore =  scoreView.getText().toString();
                     sc.add(score);
                     score = "0";
-                    scoreView.setText(getScore());
+
                     play_obstacle_hit();
                     gameOver();
 
@@ -310,6 +310,9 @@ public class GameActivity extends AppCompatActivity{
     @Override
     protected void onPause() {
         super.onPause();
+        if(score.equals("0"))
+            sc.add("0");
+        else
         sc.add(score);
         s = new HashSet<String>(sc);
         editor.putStringSet("score",s);
@@ -394,23 +397,23 @@ public class GameActivity extends AppCompatActivity{
         scoreValue.setText(highScore);
 
 
-        SharedPreferences sharedPreferences = getSharedPreferences("high_score",this.MODE_PRIVATE);
-        Set<String> set = sharedPreferences.getStringSet("score",null);
-        if(set==null){
-            hScoreValue.setText(highScore);
+        if(sc==null){
+            hScoreValue.setText("0");
 
         }
         else {
             try {
-                List<String> scores = new ArrayList<>(set);
+
 
                 List<Integer> sa = new ArrayList<Integer>();
-                for (String x : scores) {
+                for (String x : sc) {
                     if (!x.equals("0"))
                         sa.add(Integer.parseInt(x));
                 }
                 Collections.sort(sa, Collections.<Integer>reverseOrder());
-                if(sa.get(0) < Integer.parseInt(highScore))
+                if(highScore.equals("0"))
+                    hScoreValue.setText(highScore);
+                else if(sa.get(0) < Integer.parseInt(highScore))
                     hScoreValue.setText(highScore);
                 else
                 hScoreValue.setText(sa.get(0).toString());

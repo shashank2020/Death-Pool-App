@@ -76,7 +76,7 @@ public class MainActivity extends AppCompatActivity {
 
                 List<Integer> sa = new ArrayList<Integer>();
                 for (String x : scores) {
-                    if (!x.equals("0"))
+
                         sa.add(Integer.parseInt(x));
                 }
                 Collections.sort(sa, Collections.<Integer>reverseOrder());
