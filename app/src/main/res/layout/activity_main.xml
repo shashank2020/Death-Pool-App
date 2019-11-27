@@ -69,7 +69,6 @@
         app:layout_constraintTop_toBottomOf="@id/high_score" />
 
     <Button
-        android:id="@+id/button_hiscore"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:background="#00000000"

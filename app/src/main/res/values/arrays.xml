@@ -1,11 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <array name="listArray">
-        <item>Score 1</item>
-        <item>Score 2</item>
-        <item>Score 3</item>
-        <item>Score 4</item>
-        <item>Score 5</item>
-    </array>
 
 </resources>
