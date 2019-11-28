@@ -361,6 +361,8 @@ public class GameActivity extends AppCompatActivity{
         else {
             scoreView.setVisibility(View.VISIBLE);
             pauseText.setVisibility(View.INVISIBLE);
+            restartButton.setVisibility(View.INVISIBLE);
+            homeButton.setVisibility(View.INVISIBLE);
             pause.setCompoundDrawablesWithIntrinsicBounds(null,null,getResources().getDrawable( R.drawable.pause),null);
         }
 

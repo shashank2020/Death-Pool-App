@@ -78,6 +78,7 @@
         android:layout_height="wrap_content"
 
         app:layout_constraintTop_toBottomOf="@id/GameOverText"
+
         app:layout_constraintBottom_toTopOf="@id/scoreCurrentValue"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -125,6 +126,7 @@
 
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
+
 
         android:textSize="50sp"
         android:fontFamily="@font/display"
