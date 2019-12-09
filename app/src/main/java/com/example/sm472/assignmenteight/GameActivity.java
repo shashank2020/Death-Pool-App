@@ -1,10 +1,12 @@
 package com.example.sm472.assignmenteight;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Canvas;
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.GestureDetector;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -17,9 +19,18 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
+
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.reward.RewardedVideoAdListener;
+import com.google.android.gms.ads.rewarded.RewardItem;
+import com.google.android.gms.ads.rewarded.RewardedAd;
+import com.google.android.gms.ads.rewarded.RewardedAdCallback;
+import com.google.android.gms.ads.rewarded.RewardedAdLoadCallback;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -28,7 +39,7 @@ import java.util.List;
 import java.util.Random;
 import java.util.Set;
 
-public class GameActivity extends AppCompatActivity{
+public class GameActivity extends AppCompatActivity {
 
     //PLAYER OBJECT
     Player player ;
@@ -66,6 +77,10 @@ public class GameActivity extends AppCompatActivity{
     TextView hScoreValue;
     int uioptions;
     String highScore;
+    private RewardedAd rewardedAd;
+    private Button Rewardbutton;
+    Activity act ;
+
 
 
 
@@ -209,11 +224,14 @@ public class GameActivity extends AppCompatActivity{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        act=this;
 
-
-
+       loadReward();
         loadActivity();
     }
+
+
+
     protected void loadActivity()
     {
         setContentView(R.layout.activity_game);
@@ -249,6 +267,7 @@ public class GameActivity extends AppCompatActivity{
         scoreValue = findViewById(R.id.scoreCurrentValue);
         hScoreTxt = findViewById(R.id.highScoreText);
         hScoreValue = findViewById(R.id.highScoreValue);
+        Rewardbutton = findViewById(R.id.reward);
 
         if(editor == null && sc ==null && sharedPreferences ==null) {
             sharedPreferences= getSharedPreferences("high_score",MODE_PRIVATE);
@@ -267,6 +286,8 @@ public class GameActivity extends AppCompatActivity{
             //display the flick gesture toast
 
         }
+
+
 
 
         //set graphics view to the layout
@@ -363,6 +384,7 @@ public class GameActivity extends AppCompatActivity{
             pauseText.setVisibility(View.INVISIBLE);
             restartButton.setVisibility(View.INVISIBLE);
             homeButton.setVisibility(View.INVISIBLE);
+
             pause.setCompoundDrawablesWithIntrinsicBounds(null,null,getResources().getDrawable( R.drawable.pause),null);
         }
 
@@ -377,6 +399,7 @@ public class GameActivity extends AppCompatActivity{
         scoreText.setVisibility(View.INVISIBLE);
         hScoreValue.setVisibility(View.INVISIBLE);
         hScoreTxt.setVisibility(View.INVISIBLE);
+        Rewardbutton.setVisibility(View.INVISIBLE);
 
         pauseOn = false;
         loadActivity();
@@ -399,7 +422,8 @@ public class GameActivity extends AppCompatActivity{
         hScoreValue.setVisibility(View.VISIBLE);
         hScoreTxt.setVisibility(View.VISIBLE);
         scoreValue.setText(highScore);
-
+        if(rewardedAd.isLoaded())
+        Rewardbutton.setVisibility(View.VISIBLE);
 
 
             try {
@@ -429,6 +453,65 @@ public class GameActivity extends AppCompatActivity{
         homeButton.setVisibility(View.VISIBLE);
 
     }
+
+
+    public void onClickReward(View view) {
+
+
+        if (rewardedAd.isLoaded()) {
+
+            RewardedAdCallback adCallback = new RewardedAdCallback() {
+                @Override
+                public void onRewardedAdOpened() {
+                    // Ad opened.   Toast.makeText(act,"REWARDED",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(act,"open",Toast.LENGTH_SHORT).show();
+                }
+
+                @Override
+                public void onRewardedAdClosed() {
+
+                     Toast.makeText(act,"closed",Toast.LENGTH_SHORT).show();
+                    loadReward();
+                }
+
+                @Override
+                public void onUserEarnedReward(@NonNull RewardItem reward) {
+                    Toast.makeText(act,"REWARDED",Toast.LENGTH_SHORT).show();
+                    Rewardbutton.setVisibility(View.INVISIBLE);
+                    loadReward();
+
+                }
+
+                @Override
+                public void onRewardedAdFailedToShow(int errorCode) {
+                    Toast.makeText(act,"failed",Toast.LENGTH_SHORT).show();
+                }
+            };
+            rewardedAd.show(act, adCallback);
+        } else {
+            Log.d("TAG", "The rewarded ad wasn't loaded yet.");
+
+        }
+    }
+
+    private void loadReward()
+    {
+        rewardedAd = new RewardedAd(this,"ca-app-pub-3940256099942544/5224354917");
+        RewardedAdLoadCallback adLoadCallback = new RewardedAdLoadCallback() {
+            @Override
+            public void onRewardedAdLoaded() {
+                // Ad successfully loaded.
+                Log.d("TAG","AD LOADED");
+            }
+
+            @Override
+            public void onRewardedAdFailedToLoad(int errorCode) {
+                Log.d("TAG","AD DIDNT LOAD");
+            }
+        };
+        rewardedAd.loadAd(new AdRequest.Builder().build(), adLoadCallback);
+    }
+
 
 
 
