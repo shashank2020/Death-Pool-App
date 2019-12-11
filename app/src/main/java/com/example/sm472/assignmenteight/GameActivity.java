@@ -4,8 +4,10 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Canvas;
+import android.graphics.PorterDuff;
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.util.Log;
 import android.view.GestureDetector;
 import android.view.Gravity;
@@ -16,6 +18,9 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -80,14 +85,16 @@ public class GameActivity extends AppCompatActivity {
     private RewardedAd rewardedAd;
     private Button Rewardbutton;
     Activity act ;
-    Button freezeButton;
+    ImageView freezeButton;
     Set<String> f;
     List<String> fc;
     SharedPreferences freezeTimeStatus;
     SharedPreferences.Editor freezeEditor;
+    ProgressBar progress ;
+    Boolean Freeze_time;
 
 
-    class GraphicsView extends View implements GestureDetector.OnGestureListener{
+    class GraphicsView extends View implements GestureDetector.OnGestureListener, GestureDetector.OnDoubleTapListener{
         private GestureDetector gestureDetector;
         public GraphicsView(Context context)
         {
@@ -208,7 +215,7 @@ public class GameActivity extends AppCompatActivity {
 
             }
 
-            @Override
+        @Override
             public boolean onFling (MotionEvent motionEvent, MotionEvent motionEvent1,float v,
             float v1){
 
@@ -222,6 +229,26 @@ public class GameActivity extends AppCompatActivity {
                     return false;
             }
 
+
+        @Override
+        public boolean onSingleTapConfirmed(MotionEvent motionEvent) {
+            return false;
+        }
+
+        @Override
+        public boolean onDoubleTap(MotionEvent motionEvent) {
+            freezeButton.setVisibility(View.INVISIBLE);
+            fc.remove(0);
+            fc.add(0,"false");
+            Countdown();
+
+            return true;
+        }
+
+        @Override
+        public boolean onDoubleTapEvent(MotionEvent motionEvent) {
+            return false;
+        }
     }
 
     @Override
@@ -272,8 +299,11 @@ public class GameActivity extends AppCompatActivity {
         hScoreTxt = findViewById(R.id.highScoreText);
         hScoreValue = findViewById(R.id.highScoreValue);
         Rewardbutton = findViewById(R.id.reward);
-
+        progress = findViewById(R.id.progressBar);
         freezeButton = findViewById(R.id.freezeButton);
+        Freeze_time = false;
+
+        progress.setProgress(100);
 
 
         if(freezeTimeStatus==null && freezeEditor==null && fc == null) {
@@ -573,12 +603,28 @@ public class GameActivity extends AppCompatActivity {
         rewardedAd.loadAd(new AdRequest.Builder().build(), adLoadCallback);
     }
 
-    public void onClickFreeze(View view) {
-        freezeButton.setVisibility(View.INVISIBLE);
-        fc.remove(0);
-        fc.add(0,"false");
-    }
 
+    private void Countdown()
+    {
+
+        new CountDownTimer(5000,50) {
+            int n =100;
+            @Override
+            public void onTick(long l) {
+                progress.setVisibility(View.VISIBLE);
+                progress.setProgress(n);
+                n=n-1;
+
+            }
+
+            @Override
+            public void onFinish() {
+                progress.setProgress(100);
+                progress.setVisibility(View.INVISIBLE);
+
+            }
+        }.start();
+    }
 
 
 
