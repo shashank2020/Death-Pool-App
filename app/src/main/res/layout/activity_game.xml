@@ -189,5 +189,22 @@
        android:onClick="onClickReward">
 
     </androidx.appcompat.widget.AppCompatButton>
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/freezeButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:text="A"
+        android:textSize="30dp"
+        android:textColor="@color/colorAccent"
+
+        android:visibility="invisible"
+        android:onClick="onClickFreeze"
+        android:background="@drawable/square"
+
+        ></androidx.appcompat.widget.AppCompatButton>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

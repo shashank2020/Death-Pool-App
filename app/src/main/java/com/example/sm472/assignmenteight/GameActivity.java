@@ -67,7 +67,7 @@ public class GameActivity extends AppCompatActivity {
     TextView pauseText;
     private Boolean pauseOn = false;
     Button pause;
-
+    Boolean flag=false;
     TextView gameOverText;
     Button restartButton;
     Button homeButton;
@@ -80,8 +80,11 @@ public class GameActivity extends AppCompatActivity {
     private RewardedAd rewardedAd;
     private Button Rewardbutton;
     Activity act ;
-
-
+    Button freezeButton;
+    Set<String> f;
+    List<String> fc;
+    SharedPreferences freezeTimeStatus;
+    SharedPreferences.Editor freezeEditor;
 
 
     class GraphicsView extends View implements GestureDetector.OnGestureListener{
@@ -256,6 +259,7 @@ public class GameActivity extends AppCompatActivity {
         ob1speed = 1;
         ob2speed = ob1speed/2;
 
+
         //get the score textview
         scoreView = (TextView)findViewById(R.id.score_text);
         pauseText = findViewById(R.id.pauseText);
@@ -268,6 +272,47 @@ public class GameActivity extends AppCompatActivity {
         hScoreTxt = findViewById(R.id.highScoreText);
         hScoreValue = findViewById(R.id.highScoreValue);
         Rewardbutton = findViewById(R.id.reward);
+
+        freezeButton = findViewById(R.id.freezeButton);
+
+
+        if(freezeTimeStatus==null && freezeEditor==null && fc == null) {
+            freezeTimeStatus = getSharedPreferences("Freeze_Time", MODE_PRIVATE);
+            freezeEditor = freezeTimeStatus.edit();
+
+            freezeEditor.putStringSet("stat", new HashSet<String>());
+            Set<String> temp = freezeTimeStatus.getStringSet("stat",null);
+            if(temp!=null)
+            {
+                fc = new ArrayList<>(temp);
+                Toast.makeText(this,"THERE",Toast.LENGTH_LONG).show();
+
+            }
+            else
+            {
+                fc = new ArrayList<>();
+
+                fc.add(0,"false");
+            }
+
+
+
+
+        }
+
+
+        if(fc.get(0).equals("true"))
+        {
+            freezeButton.setVisibility(View.VISIBLE);
+            Toast.makeText(this,fc.get(0),Toast.LENGTH_LONG).show();
+        }
+        else {
+            freezeButton.setVisibility(View.INVISIBLE);
+            Toast.makeText(this, fc.get(0), Toast.LENGTH_LONG).show();
+
+
+        }
+
 
         if(editor == null && sc ==null && sharedPreferences ==null) {
             sharedPreferences= getSharedPreferences("high_score",MODE_PRIVATE);
@@ -331,15 +376,19 @@ public class GameActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        if(score.equals("0"))
+        if (score.equals("0"))
             sc.add("0");
         else
-        sc.add(score);
+            sc.add(score);
         s = new HashSet<String>(sc);
-        editor.putStringSet("score",s);
+        editor.putStringSet("score", s);
         editor.commit();
-    }
 
+        f = new HashSet<>(fc);
+        freezeEditor.putStringSet("stat",f);
+        freezeEditor.commit();
+
+    }
     @Override
     protected void onResume() {
         super.onResume();
@@ -371,15 +420,24 @@ public class GameActivity extends AppCompatActivity {
     }
     public void onClickPause(View view) {
         pauseOn = !pauseOn;
+
         if(pauseOn) {
             pauseText.setVisibility(View.VISIBLE);
             restartButton.setVisibility(View.VISIBLE);
             homeButton.setVisibility(View.VISIBLE);
             scoreView.setVisibility(View.INVISIBLE);
+            if(freezeButton.getVisibility()== view.VISIBLE) {
+                freezeButton.setVisibility(View.INVISIBLE);
+                flag=true;
+            }
             pause.setCompoundDrawablesWithIntrinsicBounds(null,null,getResources().getDrawable( R.drawable.play),null);
 
         }
         else {
+            if(flag) {
+                freezeButton.setVisibility(View.VISIBLE);
+                flag=false;
+            }
             scoreView.setVisibility(View.VISIBLE);
             pauseText.setVisibility(View.INVISIBLE);
             restartButton.setVisibility(View.INVISIBLE);
@@ -421,6 +479,7 @@ public class GameActivity extends AppCompatActivity {
         scoreText.setVisibility(View.VISIBLE);
         hScoreValue.setVisibility(View.VISIBLE);
         hScoreTxt.setVisibility(View.VISIBLE);
+        freezeButton.setVisibility(View.INVISIBLE);
         scoreValue.setText(highScore);
         if(rewardedAd.isLoaded())
         Rewardbutton.setVisibility(View.VISIBLE);
@@ -478,6 +537,8 @@ public class GameActivity extends AppCompatActivity {
                 public void onUserEarnedReward(@NonNull RewardItem reward) {
                     Toast.makeText(act,"REWARDED",Toast.LENGTH_SHORT).show();
                     Rewardbutton.setVisibility(View.INVISIBLE);
+                    fc.remove(0);
+                    fc.add(0,"true");
                     loadReward();
 
                 }
@@ -510,6 +571,12 @@ public class GameActivity extends AppCompatActivity {
             }
         };
         rewardedAd.loadAd(new AdRequest.Builder().build(), adLoadCallback);
+    }
+
+    public void onClickFreeze(View view) {
+        freezeButton.setVisibility(View.INVISIBLE);
+        fc.remove(0);
+        fc.add(0,"false");
     }
 
 
