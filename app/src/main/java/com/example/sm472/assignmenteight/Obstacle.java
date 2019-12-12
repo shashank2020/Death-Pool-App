@@ -2,11 +2,13 @@ package com.example.sm472.assignmenteight;
 
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.widget.Button;
 
 public class Obstacle extends GameElement {
     Paint paint ;
     Paint strokeC;
     Canvas canvas;
+    Boolean freeze;
     public Obstacle(float x,float y,int r,int color,int stroke,Canvas c) {
         super(x, y, r);
         paint = new Paint();
@@ -18,7 +20,6 @@ public class Obstacle extends GameElement {
     @Override
     protected void Draw(Canvas canvas) {
         super.Draw(canvas);
-
         canvas.drawCircle(xpos,ypos,radius,strokeC);
         canvas.drawCircle(xpos,ypos,radius-5,paint);
 

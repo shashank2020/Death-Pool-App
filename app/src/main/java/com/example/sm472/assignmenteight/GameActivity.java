@@ -91,8 +91,9 @@ public class GameActivity extends AppCompatActivity {
     SharedPreferences freezeTimeStatus;
     SharedPreferences.Editor freezeEditor;
     ProgressBar progress ;
-    Boolean Freeze_time;
-
+    public Boolean Freeze_time;
+    CountDownTimer ctr;
+    long counterValue;
 
     class GraphicsView extends View implements GestureDetector.OnGestureListener, GestureDetector.OnDoubleTapListener{
         private GestureDetector gestureDetector;
@@ -134,9 +135,10 @@ public class GameActivity extends AppCompatActivity {
                 //DRAW TARGET
                 target.Draw(canvas);
                 //DRAW OBSTACLES
-                ob1.Draw(canvas);
-                ob2.Draw(canvas);
-
+                if(!Freeze_time) {
+                    ob1.Draw(canvas);
+                    ob2.Draw(canvas);
+                }
 
                 //if player touches the target reset player position and increase score
                 if (player.collision(target)) {
@@ -148,22 +150,26 @@ public class GameActivity extends AppCompatActivity {
                     Yvelocity_player = 0;
 
                     //Increase speed of obstacles
-                    ob1speed *= 1.05;
-                    ob2speed *= 1.05;
+                    if(!Freeze_time) {
+                        ob1speed *= 1.05;
+                        ob2speed *= 1.05;
+                    }
                     play_target_hit();
 
 
                 }
-                if (player.collision(ob1) || player.collision(ob2)) {
+                if(!Freeze_time) {
+                    if (player.collision(ob1) || player.collision(ob2)) {
 
-                    this.startAnimation(shake);
-                    highScore =  scoreView.getText().toString();
-                    sc.add(score);
-                    score = "0";
+                        this.startAnimation(shake);
+                        highScore = scoreView.getText().toString();
+                        sc.add(score);
+                        score = "0";
 
-                    play_obstacle_hit();
-                    gameOver();
+                        play_obstacle_hit();
+                        gameOver();
 
+                    }
                 }
             }
 
@@ -237,12 +243,17 @@ public class GameActivity extends AppCompatActivity {
 
         @Override
         public boolean onDoubleTap(MotionEvent motionEvent) {
-            freezeButton.setVisibility(View.INVISIBLE);
-            fc.remove(0);
-            fc.add(0,"false");
-            Countdown();
+            if(freezeButton.getVisibility()== scoreView.VISIBLE) {
+                freezeButton.setVisibility(View.INVISIBLE);
+                fc.remove(0);
+                fc.add(0, "false");
+                Freeze_time = true;
+                Countdown(5000);
 
-            return true;
+                return true;
+            }
+            else
+                return false;
         }
 
         @Override
@@ -302,7 +313,7 @@ public class GameActivity extends AppCompatActivity {
         progress = findViewById(R.id.progressBar);
         freezeButton = findViewById(R.id.freezeButton);
         Freeze_time = false;
-
+        counterValue =0;
         progress.setProgress(100);
 
 
@@ -456,6 +467,11 @@ public class GameActivity extends AppCompatActivity {
             restartButton.setVisibility(View.VISIBLE);
             homeButton.setVisibility(View.VISIBLE);
             scoreView.setVisibility(View.INVISIBLE);
+            if(progress.getVisibility()== View.VISIBLE) {
+                progress.setVisibility(View.INVISIBLE);
+                ctr.cancel();
+            }
+
             if(freezeButton.getVisibility()== view.VISIBLE) {
                 freezeButton.setVisibility(View.INVISIBLE);
                 flag=true;
@@ -467,6 +483,11 @@ public class GameActivity extends AppCompatActivity {
             if(flag) {
                 freezeButton.setVisibility(View.VISIBLE);
                 flag=false;
+            }
+            if(counterValue >0)
+            {
+                progress.setVisibility(View.VISIBLE);
+                Countdown(counterValue);
             }
             scoreView.setVisibility(View.VISIBLE);
             pauseText.setVisibility(View.INVISIBLE);
@@ -510,6 +531,7 @@ public class GameActivity extends AppCompatActivity {
         hScoreValue.setVisibility(View.VISIBLE);
         hScoreTxt.setVisibility(View.VISIBLE);
         freezeButton.setVisibility(View.INVISIBLE);
+        progress.setVisibility(View.INVISIBLE);
         scoreValue.setText(highScore);
         if(rewardedAd.isLoaded())
         Rewardbutton.setVisibility(View.VISIBLE);
@@ -604,13 +626,15 @@ public class GameActivity extends AppCompatActivity {
     }
 
 
-    private void Countdown()
+    public void Countdown(long x)
     {
 
-        new CountDownTimer(5000,50) {
+         ctr = new CountDownTimer(x,50) {
             int n =100;
+
             @Override
             public void onTick(long l) {
+                counterValue = l;
                 progress.setVisibility(View.VISIBLE);
                 progress.setProgress(n);
                 n=n-1;
@@ -621,10 +645,16 @@ public class GameActivity extends AppCompatActivity {
             public void onFinish() {
                 progress.setProgress(100);
                 progress.setVisibility(View.INVISIBLE);
+                Freeze_time = false;
 
             }
+
+
         }.start();
+
+
     }
+
 
 
 
