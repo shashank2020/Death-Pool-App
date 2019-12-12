@@ -94,6 +94,7 @@ public class GameActivity extends AppCompatActivity {
     public Boolean Freeze_time;
     CountDownTimer ctr;
     long counterValue;
+    int n;
 
     class GraphicsView extends View implements GestureDetector.OnGestureListener, GestureDetector.OnDoubleTapListener{
         private GestureDetector gestureDetector;
@@ -128,14 +129,15 @@ public class GameActivity extends AppCompatActivity {
                     ob2 = new Obstacle(StartX, StartY, 35, getColor(R.color.colorPrimaryDark), getColor(R.color.colorAccent), canvas);
                 }
                 player.move(Xvelocity_player, Yvelocity_player);
-                ob1.Move(player, ob1speed);
-                ob2.Move(player, ob2speed);
+
                 //DRAW PLAYER
                 player.Draw(canvas);
                 //DRAW TARGET
                 target.Draw(canvas);
                 //DRAW OBSTACLES
                 if(!Freeze_time) {
+                    ob1.Move(player, ob1speed);
+                    ob2.Move(player, ob2speed);
                     ob1.Draw(canvas);
                     ob2.Draw(canvas);
                 }
@@ -314,6 +316,7 @@ public class GameActivity extends AppCompatActivity {
         freezeButton = findViewById(R.id.freezeButton);
         Freeze_time = false;
         counterValue =0;
+        n=100;
         progress.setProgress(100);
 
 
@@ -630,20 +633,23 @@ public class GameActivity extends AppCompatActivity {
     {
 
          ctr = new CountDownTimer(x,50) {
-            int n =100;
+
 
             @Override
             public void onTick(long l) {
                 counterValue = l;
                 progress.setVisibility(View.VISIBLE);
                 progress.setProgress(n);
-                n=n-1;
+                n--;
 
             }
 
             @Override
             public void onFinish() {
+                if(counterValue==0)
                 progress.setProgress(100);
+                if(n<=0)
+                    n=100;
                 progress.setVisibility(View.INVISIBLE);
                 Freeze_time = false;
 
