@@ -180,10 +180,12 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
 
-        android:visibility="invisible"
-        android:text="REWARD"
+    android:visibility="invisible"
+        android:text="@string/freeze"
         android:fontFamily="@font/display"
-        android:textSize="30sp"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:drawableBottom="@drawable/snowflake"
         android:textColor="@color/colorAccent"
         android:background="#00000000"
        android:onClick="onClickReward">

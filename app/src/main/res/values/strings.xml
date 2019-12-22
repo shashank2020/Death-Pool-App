@@ -5,5 +5,7 @@
     <string name="Play">Play</string>
     <string name="top5">Top 5 High Scores</string>
     <string name="names">Alexander Towers &amp; Shashank Mylarapu</string>
+    <string name="freeze">earn 10 sec freeze ability</string>
+    <string name="use_ability">double tap to use ability</string>
 
 </resources>

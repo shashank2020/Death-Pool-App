@@ -522,7 +522,7 @@ public class GameActivity extends AppCompatActivity {
         scoreText.setVisibility(View.INVISIBLE);
         hScoreValue.setVisibility(View.INVISIBLE);
         hScoreTxt.setVisibility(View.INVISIBLE);
-        Rewardbutton.setVisibility(View.INVISIBLE);
+
 
         pauseOn = false;
         loadActivity();
@@ -547,8 +547,11 @@ public class GameActivity extends AppCompatActivity {
         freezeButton.setVisibility(View.INVISIBLE);
         progress.setVisibility(View.INVISIBLE);
         scoreValue.setText(highScore);
-        if(rewardedAd.isLoaded())
-        Rewardbutton.setVisibility(View.VISIBLE);
+        if(rewardedAd.isLoaded()) {
+            Rewardbutton.setEnabled(true);
+            Rewardbutton.setVisibility(View.VISIBLE);
+            Rewardbutton.setText(R.string.freeze);
+        }
 
 
             try {
@@ -602,7 +605,9 @@ public class GameActivity extends AppCompatActivity {
                 @Override
                 public void onUserEarnedReward(@NonNull RewardItem reward) {
                     Toast.makeText(act,"REWARDED",Toast.LENGTH_SHORT).show();
-                    Rewardbutton.setVisibility(View.INVISIBLE);
+
+                    Rewardbutton.setText(R.string.use_ability);
+                    Rewardbutton.setEnabled(false);
                     fc.remove(0);
                     fc.add(0,"true");
                     loadReward();
