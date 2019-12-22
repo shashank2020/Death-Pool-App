@@ -340,7 +340,7 @@ public class GameActivity extends AppCompatActivity {
             if(temp!=null)
             {
                 fc = new ArrayList<>(temp);
-                Toast.makeText(this,"THERE",Toast.LENGTH_LONG).show();
+
 
             }
             else
@@ -359,11 +359,11 @@ public class GameActivity extends AppCompatActivity {
         if(fc.get(0).equals("true"))
         {
             freezeButton.setVisibility(View.VISIBLE);
-            Toast.makeText(this,fc.get(0),Toast.LENGTH_LONG).show();
+
         }
         else {
             freezeButton.setVisibility(View.INVISIBLE);
-            Toast.makeText(this, fc.get(0), Toast.LENGTH_LONG).show();
+
 
 
         }
@@ -591,20 +591,20 @@ public class GameActivity extends AppCompatActivity {
             RewardedAdCallback adCallback = new RewardedAdCallback() {
                 @Override
                 public void onRewardedAdOpened() {
-                    // Ad opened.   Toast.makeText(act,"REWARDED",Toast.LENGTH_SHORT).show();
-                    Toast.makeText(act,"open",Toast.LENGTH_SHORT).show();
+
+
                 }
 
                 @Override
                 public void onRewardedAdClosed() {
 
-                     Toast.makeText(act,"closed",Toast.LENGTH_SHORT).show();
+
                     loadReward();
                 }
 
                 @Override
                 public void onUserEarnedReward(@NonNull RewardItem reward) {
-                    Toast.makeText(act,"REWARDED",Toast.LENGTH_SHORT).show();
+
 
                     Rewardbutton.setText(R.string.use_ability);
                     Rewardbutton.setEnabled(false);
@@ -616,12 +616,12 @@ public class GameActivity extends AppCompatActivity {
 
                 @Override
                 public void onRewardedAdFailedToShow(int errorCode) {
-                    Toast.makeText(act,"failed",Toast.LENGTH_SHORT).show();
+
                 }
             };
             rewardedAd.show(act, adCallback);
         } else {
-            Log.d("TAG", "The rewarded ad wasn't loaded yet.");
+
 
         }
     }
@@ -633,12 +633,12 @@ public class GameActivity extends AppCompatActivity {
             @Override
             public void onRewardedAdLoaded() {
                 // Ad successfully loaded.
-                Log.d("TAG","AD LOADED");
+
             }
 
             @Override
             public void onRewardedAdFailedToLoad(int errorCode) {
-                Log.d("TAG","AD DIDNT LOAD");
+
             }
         };
         rewardedAd.loadAd(new AdRequest.Builder().build(), adLoadCallback);
