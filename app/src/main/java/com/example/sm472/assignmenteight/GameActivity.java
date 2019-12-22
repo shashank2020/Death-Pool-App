@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.graphics.Canvas;
 import android.graphics.PorterDuff;
 import android.media.MediaPlayer;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.util.Log;
@@ -25,6 +26,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -124,9 +126,9 @@ public class GameActivity extends AppCompatActivity {
                 if (ob1 == null) {
                     StartX = (canvas.getWidth() / 5);
                     StartY = canvas.getHeight() / 2;
-                    ob1 = new Obstacle(StartX, StartY, 35, getColor(R.color.colorPrimaryDark), getColor(R.color.colorAccent), canvas);
+                    ob1 = new Obstacle(StartX, StartY, 35, getColor(R.color.colorPrimaryDark), getColor(R.color.colorAccent),getColor(R.color.freezebody),getColor(R.color.freezestroke), canvas);
                     StartX = (canvas.getWidth() / 5) * 4;
-                    ob2 = new Obstacle(StartX, StartY, 35, getColor(R.color.colorPrimaryDark), getColor(R.color.colorAccent), canvas);
+                    ob2 = new Obstacle(StartX, StartY, 35, getColor(R.color.colorPrimaryDark), getColor(R.color.colorAccent),getColor(R.color.freezebody),getColor(R.color.freezestroke), canvas);
                 }
                 player.move(Xvelocity_player, Yvelocity_player);
 
@@ -136,11 +138,20 @@ public class GameActivity extends AppCompatActivity {
                 target.Draw(canvas);
                 //DRAW OBSTACLES
                 if(!Freeze_time) {
+                    ob1.freezeActivate(false);
+                    ob2.freezeActivate(false);
                     ob1.Move(player, ob1speed);
                     ob2.Move(player, ob2speed);
-                    ob1.Draw(canvas);
-                    ob2.Draw(canvas);
+
                 }
+                else
+                {
+                    ob1.freezeActivate(true);
+                    ob2.freezeActivate(true);
+
+                }
+                ob1.Draw(canvas);
+                ob2.Draw(canvas);
 
                 //if player touches the target reset player position and increase score
                 if (player.collision(target)) {
@@ -250,7 +261,7 @@ public class GameActivity extends AppCompatActivity {
                 fc.remove(0);
                 fc.add(0, "false");
                 Freeze_time = true;
-                Countdown(5000);
+                Countdown(10000);
 
                 return true;
             }
@@ -632,7 +643,8 @@ public class GameActivity extends AppCompatActivity {
     public void Countdown(long x)
     {
 
-         ctr = new CountDownTimer(x,50) {
+         ctr = new CountDownTimer(x,100) {
+
 
 
             @Override
@@ -640,6 +652,7 @@ public class GameActivity extends AppCompatActivity {
                 counterValue = l;
                 progress.setVisibility(View.VISIBLE);
                 progress.setProgress(n);
+
                 n--;
 
             }

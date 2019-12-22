@@ -7,4 +7,6 @@
     <color name="white">#FFFFFF</color>
     <color name="playerColor">#C72C41</color>
     <color name="targetColor">#510A32</color>
+    <color name="freezebody">#303F9F</color>
+    <color name="freezestroke">#95ced6</color>
 </resources>

@@ -4,27 +4,46 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.widget.Button;
 
+import static com.example.sm472.assignmenteight.R.color.freezebody;
+
 public class Obstacle extends GameElement {
     Paint paint ;
     Paint strokeC;
+    Paint freezepaint;
+    Paint freezeStroke;
     Canvas canvas;
     Boolean freeze;
-    public Obstacle(float x,float y,int r,int color,int stroke,Canvas c) {
+    public Obstacle(float x,float y,int r,int color,int stroke,int fcolor, int fstroke,Canvas c) {
         super(x, y, r);
         paint = new Paint();
         paint.setColor(color);
         strokeC = new Paint();
         strokeC.setColor(stroke);
+        freeze=false;
+         freezepaint = new Paint();
+         freezepaint.setColor(fcolor);
+         freezeStroke = new Paint(fstroke);
     }
 
     @Override
     protected void Draw(Canvas canvas) {
         super.Draw(canvas);
-        canvas.drawCircle(xpos,ypos,radius,strokeC);
-        canvas.drawCircle(xpos,ypos,radius-5,paint);
+        if(!freeze) {
+            canvas.drawCircle(xpos, ypos, radius, strokeC);
+            canvas.drawCircle(xpos, ypos, radius - 5, paint);
+        }
+        else {
+            canvas.drawCircle(xpos, ypos, radius, freezeStroke);
+            canvas.drawCircle(xpos, ypos, radius - 5, freezepaint);
+        }
 
     }
 
+    public void freezeActivate(Boolean f)
+    {
+
+        freeze = f;
+    }
     protected void Move(Player player, float speed)
     {
 
