@@ -76,8 +76,8 @@ public class GameActivity extends AppCompatActivity {
     Button pause;
     Boolean flag=false;
     TextView gameOverText;
-    Button restartButton;
-    Button homeButton;
+    ImageButton restartButton;
+    ImageButton homeButton;
     TextView scoreText;
     TextView scoreValue;
     TextView hScoreTxt;

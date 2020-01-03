@@ -134,7 +134,7 @@
         android:textColor="@color/white"
         android:id="@+id/highScoreValue"
         ></TextView>
-    <androidx.appcompat.widget.AppCompatButton
+    <androidx.appcompat.widget.AppCompatImageButton
         android:id="@+id/restartButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -143,16 +143,17 @@
         app:layout_constraintTop_toBottomOf="@id/highScoreValue"
         app:layout_constraintLeft_toRightOf="@id/homeButton"
         app:layout_constraintBottom_toBottomOf="parent"
-
         android:visibility="invisible"
-        android:drawableBottom="@drawable/restart"
-        android:textSize="30sp"
-        android:textColor="@color/colorAccent"
-        android:background="#00000000"
+
+        android:src="@drawable/restart"
+
+        android:background="@drawable/toast_back"
+        android:paddingVertical="5sp"
+        android:paddingHorizontal="40sp"
         android:onClick="onClickRstart">
 
-    </androidx.appcompat.widget.AppCompatButton>
-    <androidx.appcompat.widget.AppCompatButton
+    </androidx.appcompat.widget.AppCompatImageButton>
+    <androidx.appcompat.widget.AppCompatImageButton
         android:id="@+id/homeButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -161,15 +162,17 @@
         app:layout_constraintTop_toBottomOf="@id/highScoreValue"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-
+        android:background="@drawable/toast_back"
+        android:paddingVertical="5sp"
+        android:paddingHorizontal="40sp"
         android:visibility="invisible"
-        android:drawableBottom="@drawable/home"
+        android:src="@drawable/home"
         android:textSize="30sp"
         android:textColor="@color/colorAccent"
-        android:background="#00000000"
+
         android:onClick="onClickHome">
 
-    </androidx.appcompat.widget.AppCompatButton>
+    </androidx.appcompat.widget.AppCompatImageButton>
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/reward"
         android:layout_width="wrap_content"

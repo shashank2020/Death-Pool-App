@@ -130,4 +130,8 @@ public class HiscoreActivity extends AppCompatActivity {
         super.onResume();
         getWindow().getDecorView().setSystemUiVisibility(uioptions);
     }
+
+    public void onClick_back(View view) {
+        finish();
+    }
 }

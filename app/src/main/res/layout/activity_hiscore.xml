@@ -33,10 +33,30 @@
         android:layout_height="wrap_content"
         android:textAlignment="center"
         android:textDirection="ltr"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/hiscore_title" />
+        app:layout_constraintTop_toBottomOf="@id/hiscore_title"
+        app:layout_constraintBottom_toTopOf="@id/back"/>
+
+
+    <androidx.appcompat.widget.AppCompatImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/back"
+        app:layout_constraintBottom_toTopOf="@id/adView"
+        app:layout_constraintTop_toBottomOf="@id/hiscore_list"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+
+        android:textSize="30sp"
+
+        android:src="@drawable/home"
+        android:background="@drawable/toast_back"
+        android:paddingVertical="5sp"
+        android:paddingHorizontal="40sp"
+        android:layout_marginBottom="30sp"
+        android:onClick="onClick_back"
+        ></androidx.appcompat.widget.AppCompatImageButton>
     <com.google.android.gms.ads.AdView
         xmlns:ads="http://schemas.android.com/apk/res-auto"
         android:id="@+id/adView"

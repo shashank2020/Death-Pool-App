@@ -124,4 +124,15 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+    public void onClick_title(View view) {
+
+        Intent intent = new Intent(this,Developers.class);
+        startActivity(intent);
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
+    }
 }
